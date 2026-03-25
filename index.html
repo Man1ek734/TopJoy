@@ -56,7 +56,9 @@
       font-size: 24px;
     }
 
-    .logoText { line-height: 1; }
+    .logoText {
+      line-height: 1;
+    }
 
     .logoText h1 {
       margin: 0;
@@ -89,7 +91,8 @@
 
     .discordBtn:hover,
     .mainBtn:hover,
-    .deleteBtn:hover {
+    .deleteBtn:hover,
+    .logoutBtn:hover {
       transform: translateY(-1px);
       filter: brightness(1.08);
     }
@@ -204,7 +207,7 @@
 
     .match {
       display: grid;
-      grid-template-columns: 160px 1fr 110px;
+      grid-template-columns: 160px 1fr 130px;
       gap: 16px;
       align-items: center;
       margin: 12px 0;
@@ -258,7 +261,6 @@
     }
 
     .adminBox { padding-bottom: 18px; }
-
     .adminInner { padding: 0 22px 22px; }
 
     .adminInfo {
@@ -271,7 +273,7 @@
       line-height: 1.5;
     }
 
-    input, select {
+    input {
       width: 100%;
       padding: 14px 14px;
       margin-bottom: 12px;
@@ -291,11 +293,11 @@
       gap: 12px;
     }
 
-    .mainBtn {
+    .mainBtn,
+    .logoutBtn {
       width: 100%;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
       color: white;
       padding: 14px 16px;
       font-size: 14px;
@@ -305,6 +307,17 @@
       cursor: pointer;
       transition: 0.2s ease;
       box-shadow: 0 0 20px rgba(140, 23, 23, 0.22);
+    }
+
+    .mainBtn {
+      background: linear-gradient(135deg, #8c1717, #b66b2b);
+    }
+
+    .logoutBtn {
+      margin-top: 10px;
+      background: #1c2430;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: none;
     }
 
     .success {
@@ -320,7 +333,6 @@
     }
 
     .infoBox { padding-bottom: 18px; }
-
     .infoList { padding: 0 16px 10px; }
 
     .infoItem {
@@ -347,17 +359,22 @@
       .page { grid-template-columns: 1fr; }
       .hero h2 { font-size: 46px; }
       .stats { grid-template-columns: 1fr; }
+
       .match {
         grid-template-columns: 1fr;
         text-align: center;
       }
+
       .matchTime,
       .matchDate { text-align: center; }
+
       .grid2 { grid-template-columns: 1fr; }
+
       .nav {
         flex-direction: column;
         align-items: flex-start;
       }
+
       .adminControls {
         align-items: stretch;
       }
@@ -386,8 +403,8 @@
       <div class="heroTag">Sezon 1 ligi</div>
       <h2>TOPJOY <span>LEAGUE</span></h2>
       <p>
-        Profesjonalnie wyglądająca strona ligi CS2 z panelem admina.
-        Możesz dodawać mecze i usuwać je, jeśli coś wpiszesz źle.
+        Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze i usuwać je,
+        a teraz wszystko zapisuje się online i jest widoczne dla wszystkich.
       </p>
 
       <div class="stats">
@@ -436,7 +453,7 @@
       <div class="sectionSub">Dodawanie i usuwanie meczów z poziomu strony.</div>
       <div class="adminInner">
         <div class="adminInfo">
-          Ta wersja działa lokalnie w przeglądarce. Panel wygląda lepiej i pozwala też kasować mecze.
+          Logujesz się na stronie, dodajesz mecz i od razu widzą go wszyscy. Nie musisz wchodzić do Firestore.
         </div>
 
         <div id="loginBox">
@@ -456,6 +473,7 @@
           </div>
 
           <button class="mainBtn" onclick="addMatch()">Dodaj mecz</button>
+          <button class="logoutBtn" onclick="logout()">Wyloguj</button>
         </div>
       </div>
     </section>
@@ -480,11 +498,35 @@
     </aside>
   </main>
 
-  <script>
-    let password = "1234";
-    let logged = false;
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      deleteDoc,
+      doc,
+      onSnapshot,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    let matches = JSON.parse(localStorage.getItem("matches")) || [];
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
+      authDomain: "topjoy-league.firebaseapp.com",
+      projectId: "topjoy-league",
+      storageBucket: "topjoy-league.firebasestorage.app",
+      messagingSenderId: "148599961147",
+      appId: "1:148599961147:web:ea5f17ba9114c0dda94e1e",
+      measurementId: "G-0ETCB1NC16"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let password = "2312";
+    let logged = false;
+    let matches = [];
 
     function getUniqueTeams() {
       const teams = new Set();
@@ -496,26 +538,25 @@
     }
 
     function updateStats() {
-      document.getElementById("matchesCount").innerText = matches.length;
-      document.getElementById("teamsCount").innerText = getUniqueTeams();
+      const matchesCount = document.getElementById("matchesCount");
+      const teamsCount = document.getElementById("teamsCount");
+      if (matchesCount) matchesCount.innerText = matches.length;
+      if (teamsCount) teamsCount.innerText = getUniqueTeams();
     }
 
-    function saveMatches() {
-      localStorage.setItem("matches", JSON.stringify(matches));
-    }
-
-    function deleteMatch(index) {
+    window.deleteMatch = async function(id) {
       if (!logged) return;
 
-      const confirmDelete = confirm("Na pewno usunąć ten mecz?");
-      if (!confirmDelete) return;
+      const ok = confirm("Na pewno usunąć ten mecz?");
+      if (!ok) return;
 
-      matches.splice(index, 1);
-      saveMatches();
-      render();
-    }
+      await deleteDoc(doc(db, "mecze", id));
+    };
 
     function render() {
+      const matchesBox = document.getElementById("matches");
+      if (!matchesBox) return;
+
       let html = "";
 
       if (matches.length === 0) {
@@ -523,69 +564,89 @@
           <div class="match">
             <div class="matchDate">Brak</div>
             <div class="matchTeams">Nie dodano jeszcze żadnych meczów</div>
-            <div class="matchTime">--:--</div>
+            <div class="adminControls">
+              <div class="matchTime">--:--</div>
+            </div>
           </div>
         `;
       } else {
-        matches.forEach((m, index) => {
+        matches.forEach((m) => {
           html += `
             <div class="match">
-              <div class="matchDate">${m.date}</div>
-              <div class="matchTeams">${m.teamA} <span>VS</span> ${m.teamB}</div>
+              <div class="matchDate">${m.date || "-"}</div>
+              <div class="matchTeams">${m.teamA || "-"} <span>VS</span> ${m.teamB || "-"}</div>
               <div class="adminControls">
-                <div class="matchTime">${m.time}</div>
-                ${logged ? `<button class="deleteBtn" onclick="deleteMatch(${index})">Usuń</button>` : ``}
+                <div class="matchTime">${m.time || "--:--"}</div>
+                ${logged ? `<button class="deleteBtn" onclick="deleteMatch('${m.id}')">Usuń</button>` : ``}
               </div>
             </div>
           `;
         });
       }
 
-      document.getElementById("matches").innerHTML = html;
+      matchesBox.innerHTML = html;
       updateStats();
     }
 
-    function login() {
-      let p = document.getElementById("pass").value;
-      let msg = document.getElementById("loginMsg");
+    window.login = function() {
+      const p = document.getElementById("pass").value;
+      const msg = document.getElementById("loginMsg");
 
       if (p === password) {
         logged = true;
         document.getElementById("admin").style.display = "block";
         document.getElementById("loginBox").style.display = "none";
-        msg.innerHTML = "";
+        if (msg) msg.innerHTML = "";
         render();
       } else {
-        msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
+        if (msg) msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
       }
-    }
+    };
 
-    function addMatch() {
+    window.logout = function() {
+      logged = false;
+      document.getElementById("admin").style.display = "none";
+      document.getElementById("loginBox").style.display = "block";
+      document.getElementById("pass").value = "";
+      render();
+    };
+
+    window.addMatch = async function() {
       if (!logged) return;
 
-      let teamA = document.getElementById("teamA").value.trim();
-      let teamB = document.getElementById("teamB").value.trim();
-      let date = document.getElementById("date").value.trim();
-      let time = document.getElementById("time").value.trim();
+      const teamA = document.getElementById("teamA").value.trim();
+      const teamB = document.getElementById("teamB").value.trim();
+      const date = document.getElementById("date").value.trim();
+      const time = document.getElementById("time").value.trim();
 
       if (!teamA || !teamB || !date || !time) {
         alert("Uzupełnij wszystkie pola.");
         return;
       }
 
-      let match = { teamA, teamB, date, time };
-      matches.unshift(match);
-
-      saveMatches();
-      render();
+      await addDoc(collection(db, "mecze"), {
+        teamA,
+        teamB,
+        date,
+        time,
+        createdAt: Date.now()
+      });
 
       document.getElementById("teamA").value = "";
       document.getElementById("teamB").value = "";
       document.getElementById("date").value = "";
       document.getElementById("time").value = "";
-    }
+    };
 
-    render();
+    const q = query(collection(db, "mecze"), orderBy("createdAt", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      matches = snapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data()
+      }));
+      render();
+    });
   </script>
 </body>
 </html>
