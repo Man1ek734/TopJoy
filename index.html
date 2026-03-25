@@ -78,18 +78,68 @@
     }
 
     .discordBtn {
+      position: relative;
       background: linear-gradient(135deg, #8c1717, #b66b2b);
       color: white;
       border: none;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 700;
+      padding: 13px 22px;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
       cursor: pointer;
-      transition: 0.2s ease;
-      box-shadow: 0 0 20px rgba(140, 23, 23, 0.25);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      box-shadow:
+        0 0 15px rgba(182, 107, 43, 0.25),
+        0 0 30px rgba(140, 23, 23, 0.15);
+      animation: pulseGlow 2.6s infinite ease-in-out;
     }
 
-    .discordBtn:hover,
+    .discordBtn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 120%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.28), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .discordBtn:hover::before {
+      left: 130%;
+    }
+
+    .discordBtn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow:
+        0 0 22px rgba(182, 107, 43, 0.42),
+        0 0 44px rgba(140, 23, 23, 0.28);
+      filter: brightness(1.05);
+    }
+
+    .discordBtn:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow:
+          0 0 10px rgba(182, 107, 43, 0.18),
+          0 0 22px rgba(140, 23, 23, 0.1);
+      }
+      50% {
+        box-shadow:
+          0 0 22px rgba(182, 107, 43, 0.35),
+          0 0 42px rgba(140, 23, 23, 0.22);
+      }
+      100% {
+        box-shadow:
+          0 0 10px rgba(182, 107, 43, 0.18),
+          0 0 22px rgba(140, 23, 23, 0.1);
+      }
+    }
+
     .mainBtn:hover,
     .deleteBtn:hover,
     .logoutBtn:hover {
@@ -431,7 +481,6 @@
 
     <aside class="infoBox">
       <h3 class="sectionTitle">Informacje</h3>
-      <div class="sectionSub">Krótki panel boczny bez reklam i śmieci.</div>
       <div class="infoList">
         <div class="infoItem">
           <strong>Dostęp admina</strong>
@@ -443,7 +492,7 @@
         </div>
         <div class="infoItem">
           <strong>Discord</strong>
-          <span>Przycisk u góry przenosi prosto na Wasz serwer.</span>
+          <span>Po kliknięciu przycisku u góry zostaniesz automatycznie przeniesiony i możesz od razu dołączyć do naszego serwera Discord.</span>
         </div>
       </div>
     </aside>
@@ -546,10 +595,8 @@
 
     window.deleteMatch = async function(id) {
       if (!logged) return;
-
       const ok = confirm("Na pewno usunąć ten mecz?");
       if (!ok) return;
-
       await deleteDoc(doc(db, "mecze", id));
     };
 
