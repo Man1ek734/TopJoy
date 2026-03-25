@@ -75,6 +75,30 @@
       font-weight: 700;
     }
 
+    .navButtons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .sectionBtn {
+      background: rgba(255,255,255,0.04);
+      color: #efc089;
+      border: 1px solid rgba(182, 107, 43, 0.25);
+      padding: 13px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .sectionBtn:hover {
+      transform: translateY(-2px);
+      background: rgba(182, 107, 43, 0.12);
+      box-shadow: 0 0 18px rgba(182, 107, 43, 0.18);
+    }
+
     .discordBtn {
       position: relative;
       background: linear-gradient(135deg, #8c1717, #b66b2b);
@@ -138,10 +162,7 @@
 
     .mainBtn:hover,
     .deleteBtn:hover,
-    .logoutBtn:hover,
-    .steamBtn:hover,
-    .teamCardBtn:hover,
-    .backBtn:hover {
+    .logoutBtn:hover {
       transform: translateY(-1px);
       filter: brightness(1.08);
     }
@@ -159,9 +180,7 @@
     .panel,
     .matchesBox,
     .adminBox,
-    .infoBox,
-    .teamsBox,
-    .teamProfileBox {
+    .infoBox {
       background: rgba(18, 24, 33, 0.92);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
@@ -254,9 +273,7 @@
       font-size: 14px;
     }
 
-    .matchesList,
-    .teamsList,
-    .teamProfileInner { padding: 0 16px 16px; }
+    .matchesList { padding: 0 16px 16px; }
 
     .match {
       display: grid;
@@ -313,10 +330,7 @@
       transition: 0.2s ease;
     }
 
-    .adminBox,
-    .teamsBox,
-    .teamProfileBox { padding-bottom: 18px; }
-
+    .adminBox { padding-bottom: 18px; }
     .adminInner { padding: 0 22px 22px; }
 
     .adminInfo {
@@ -350,8 +364,7 @@
     }
 
     .mainBtn,
-    .logoutBtn,
-    .backBtn {
+    .logoutBtn {
       width: 100%;
       border: none;
       border-radius: 12px;
@@ -370,8 +383,7 @@
       background: linear-gradient(135deg, #8c1717, #b66b2b);
     }
 
-    .logoutBtn,
-    .backBtn {
+    .logoutBtn {
       margin-top: 10px;
       background: #1c2430;
       border: 1px solid rgba(255,255,255,0.08);
@@ -413,142 +425,12 @@
       line-height: 1.5;
     }
 
-    .teamCard {
-      display: grid;
-      grid-template-columns: 90px 1fr 140px;
-      gap: 16px;
-      align-items: center;
-      margin: 12px 0;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(8, 11, 16, 0.48);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .teamLogo {
-      width: 78px;
-      height: 78px;
-      border-radius: 16px;
-      object-fit: cover;
-      background: #10151c;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .teamLogoFallback {
-      width: 78px;
-      height: 78px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #10151c;
-      border: 1px solid rgba(255,255,255,0.08);
-      color: #efc089;
-      font-size: 28px;
-      font-weight: 900;
-    }
-
-    .teamName {
-      font-size: 24px;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    .teamPlayersCount {
-      margin-top: 6px;
-      color: rgba(255,255,255,0.55);
-      font-size: 14px;
-    }
-
-    .teamCardBtn,
-    .steamBtn {
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 800;
-      transition: 0.2s ease;
-    }
-
-    .teamCardBtn {
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
-      color: #fff;
-      padding: 12px 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .teamProfileHeader {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(8, 11, 16, 0.48);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .teamProfileLogo {
-      width: 100px;
-      height: 100px;
-      border-radius: 18px;
-      object-fit: cover;
-      background: #10151c;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .teamProfileName {
-      font-size: 34px;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    .teamProfileSub {
-      margin-top: 8px;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .playersList {
-      display: grid;
-      gap: 12px;
-    }
-
-    .playerRow {
-      display: grid;
-      grid-template-columns: 1fr 140px;
-      gap: 12px;
-      align-items: center;
-      padding: 16px;
-      border-radius: 14px;
-      background: rgba(8, 11, 16, 0.48);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .playerNick {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .steamBtn {
-      background: #1f2b3a;
-      color: #efc089;
-      padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-    }
-
-    .hidden { display: none !important; }
-
     @media (max-width: 980px) {
       .page { grid-template-columns: 1fr; }
       .hero h2 { font-size: 46px; }
       .stats { grid-template-columns: 1fr; }
 
-      .match,
-      .teamCard,
-      .playerRow,
-      .teamProfileHeader {
+      .match {
         grid-template-columns: 1fr;
         text-align: center;
       }
@@ -563,14 +445,13 @@
         align-items: flex-start;
       }
 
-      .adminControls {
-        align-items: stretch;
+      .navButtons {
+        width: 100%;
+        flex-wrap: wrap;
       }
 
-      .teamLogo,
-      .teamLogoFallback,
-      .teamProfileLogo {
-        margin: 0 auto;
+      .adminControls {
+        align-items: stretch;
       }
     }
   </style>
@@ -586,9 +467,15 @@
         </div>
       </div>
 
-      <a href="https://discord.gg/BKbxhe7cyB" target="_blank">
-        <button class="discordBtn">Discord</button>
-      </a>
+      <div class="navButtons">
+        <a href="druzyny.html">
+          <button class="sectionBtn">Drużyny</button>
+        </a>
+
+        <a href="https://discord.gg/BKbxhe7cyB" target="_blank">
+          <button class="discordBtn">Discord</button>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -597,7 +484,7 @@
       <div class="heroTag">Sezon 1 ligi</div>
       <h2>TOPJOY <span>LEAGUE</span></h2>
       <p>
-        Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze, drużyny i graczy,
+        Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze,
         a wszystko zapisuje się online i jest widoczne dla wszystkich.
       </p>
 
@@ -628,7 +515,7 @@
       <div class="infoList">
         <div class="infoItem">
           <strong>Dostęp admina</strong>
-          <span>Tylko osoba z hasłem może dodawać i usuwać mecze oraz drużyny.</span>
+          <span>Tylko osoba z hasłem może dodawać i usuwać mecze.</span>
         </div>
         <div class="infoItem">
           <strong>Kolory</strong>
@@ -641,26 +528,12 @@
       </div>
     </aside>
 
-    <section class="teamsBox" id="teamsSection">
-      <h3 class="sectionTitle">Drużyny</h3>
-      <div class="sectionSub">Kliknij drużynę, aby zobaczyć skład i linki do Steam.</div>
-      <div id="teamsList" class="teamsList"></div>
-    </section>
-
-    <section class="teamProfileBox hidden" id="teamProfileBox">
-      <h3 class="sectionTitle">Profil drużyny</h3>
-      <div class="teamProfileInner">
-        <button class="backBtn" onclick="closeTeamProfile()">Wróć do drużyn</button>
-        <div id="teamProfileContent"></div>
-      </div>
-    </section>
-
     <section class="adminBox">
       <h3 class="sectionTitle">Admin panel</h3>
-      <div class="sectionSub">Dodawanie i usuwanie meczów oraz drużyn z poziomu strony.</div>
+      <div class="sectionSub">Dodawanie i usuwanie meczów z poziomu strony.</div>
       <div class="adminInner">
         <div class="adminInfo">
-          Logujesz się na stronie, dodajesz mecze i drużyny, i od razu widzą je wszyscy.
+          Logujesz się na stronie, dodajesz mecz i od razu widzą go wszyscy.
         </div>
 
         <div id="loginBox">
@@ -671,44 +544,15 @@
 
         <div id="admin" style="display:none;">
           <div class="success">Zalogowano jako admin.</div>
-
-          <h4 style="margin: 0 0 12px;">Dodaj mecz</h4>
           <input id="teamA" placeholder="Drużyna A">
           <input id="teamB" placeholder="Drużyna B">
+
           <div class="grid2">
             <input id="date" placeholder="Data, np. 25.03.26">
             <input id="time" placeholder="Godzina, np. 20:20">
           </div>
+
           <button class="mainBtn" onclick="addMatch()">Dodaj mecz</button>
-
-          <hr style="margin:24px 0;border-color:rgba(255,255,255,0.08);">
-
-          <h4 style="margin: 0 0 12px;">Dodaj drużynę</h4>
-          <input id="teamNameInput" placeholder="Nazwa drużyny">
-          <input id="teamLogoInput" placeholder="Link do logo drużyny">
-
-          <div class="grid2">
-            <input id="player1Nick" placeholder="Gracz 1 nick">
-            <input id="player1Steam" placeholder="Gracz 1 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player2Nick" placeholder="Gracz 2 nick">
-            <input id="player2Steam" placeholder="Gracz 2 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player3Nick" placeholder="Gracz 3 nick">
-            <input id="player3Steam" placeholder="Gracz 3 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player4Nick" placeholder="Gracz 4 nick">
-            <input id="player4Steam" placeholder="Gracz 4 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player5Nick" placeholder="Gracz 5 nick">
-            <input id="player5Steam" placeholder="Gracz 5 link Steam">
-          </div>
-
-          <button class="mainBtn" onclick="addTeam()">Dodaj drużynę</button>
           <button class="logoutBtn" onclick="logout()">Wyloguj</button>
         </div>
       </div>
@@ -727,8 +571,8 @@
           <span>Esport / HLTV style</span>
         </div>
         <div class="infoItem">
-          <strong>Dodawanie treści</strong>
-          <span>Przez panel po zalogowaniu.</span>
+          <strong>Drużyny</strong>
+          <span>Przycisk u góry otwiera osobną zakładkę z drużynami i panelem do ich dodawania.</span>
         </div>
       </div>
     </aside>
@@ -765,23 +609,11 @@
     let matches = [];
     let teams = [];
 
-    function getUniqueTeamsFromMatches() {
-      const unique = new Set();
-      matches.forEach(m => {
-        if (m.teamA) unique.add(m.teamA);
-        if (m.teamB) unique.add(m.teamB);
-      });
-      teams.forEach(t => {
-        if (t.name) unique.add(t.name);
-      });
-      return unique.size;
-    }
-
     function updateStats() {
       const matchesCount = document.getElementById("matchesCount");
       const teamsCount = document.getElementById("teamsCount");
       if (matchesCount) matchesCount.innerText = matches.length;
-      if (teamsCount) teamsCount.innerText = teams.length || getUniqueTeamsFromMatches();
+      if (teamsCount) teamsCount.innerText = teams.length;
     }
 
     window.deleteMatch = async function(id) {
@@ -789,14 +621,6 @@
       const ok = confirm("Na pewno usunąć ten mecz?");
       if (!ok) return;
       await deleteDoc(doc(db, "mecze", id));
-    };
-
-    window.deleteTeam = async function(id) {
-      if (!logged) return;
-      const ok = confirm("Na pewno usunąć tę drużynę?");
-      if (!ok) return;
-      await deleteDoc(doc(db, "druzyny", id));
-      closeTeamProfile();
     };
 
     function renderMatches() {
@@ -834,96 +658,6 @@
       updateStats();
     }
 
-    function createLogoHtml(logo, name, className = "teamLogo") {
-      if (logo) {
-        return `<img src="${logo}" alt="${name}" class="${className}" onerror="this.outerHTML='<div class=&quot;teamLogoFallback&quot;>${(name || "T").charAt(0).toUpperCase()}</div>'">`;
-      }
-      return `<div class="teamLogoFallback">${(name || "T").charAt(0).toUpperCase()}</div>`;
-    }
-
-    function renderTeams() {
-      const teamsList = document.getElementById("teamsList");
-      if (!teamsList) return;
-
-      let html = "";
-
-      if (teams.length === 0) {
-        html = `
-          <div class="teamCard">
-            <div class="teamLogoFallback">T</div>
-            <div>
-              <div class="teamName">Brak drużyn</div>
-              <div class="teamPlayersCount">Nie dodano jeszcze żadnej drużyny</div>
-            </div>
-            <div></div>
-          </div>
-        `;
-      } else {
-        teams.forEach((team) => {
-          const playersCount = Array.isArray(team.players) ? team.players.length : 0;
-          html += `
-            <div class="teamCard">
-              ${createLogoHtml(team.logo, team.name)}
-              <div>
-                <div class="teamName">${team.name || "-"}</div>
-                <div class="teamPlayersCount">Graczy: ${playersCount}</div>
-              </div>
-              <button class="teamCardBtn" onclick="openTeamProfile('${team.id}')">Zobacz</button>
-            </div>
-          `;
-        });
-      }
-
-      teamsList.innerHTML = html;
-      updateStats();
-    }
-
-    window.openTeamProfile = function(id) {
-      const team = teams.find(t => t.id === id);
-      if (!team) return;
-
-      const box = document.getElementById("teamProfileBox");
-      const content = document.getElementById("teamProfileContent");
-      const teamsSection = document.getElementById("teamsSection");
-
-      const players = Array.isArray(team.players) ? team.players : [];
-
-      content.innerHTML = `
-        <div class="teamProfileHeader">
-          ${createLogoHtml(team.logo, team.name, "teamProfileLogo")}
-          <div>
-            <div class="teamProfileName">${team.name || "-"}</div>
-            <div class="teamProfileSub">Skład drużyny i profile Steam</div>
-            ${logged ? `<button class="deleteBtn" style="margin-top:12px;" onclick="deleteTeam('${team.id}')">Usuń drużynę</button>` : ``}
-          </div>
-        </div>
-        <div class="playersList">
-          ${
-            players.length === 0
-              ? `<div class="playerRow"><div class="playerNick">Brak graczy</div><div></div></div>`
-              : players.map(player => `
-                <div class="playerRow">
-                  <div class="playerNick">${player.nick || "-"}</div>
-                  ${
-                    player.steam
-                      ? `<a href="${player.steam}" target="_blank"><button class="steamBtn">Steam</button></a>`
-                      : `<button class="steamBtn" disabled style="opacity:.5;cursor:not-allowed;">Brak linku</button>`
-                  }
-                </div>
-              `).join("")
-          }
-        </div>
-      `;
-
-      box.classList.remove("hidden");
-      teamsSection.classList.add("hidden");
-    };
-
-    window.closeTeamProfile = function() {
-      document.getElementById("teamProfileBox").classList.add("hidden");
-      document.getElementById("teamsSection").classList.remove("hidden");
-    };
-
     window.login = function() {
       const p = document.getElementById("pass").value;
       const msg = document.getElementById("loginMsg");
@@ -934,7 +668,6 @@
         document.getElementById("loginBox").style.display = "none";
         if (msg) msg.innerHTML = "";
         renderMatches();
-        renderTeams();
       } else {
         if (msg) msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
       }
@@ -946,7 +679,6 @@
       document.getElementById("loginBox").style.display = "block";
       document.getElementById("pass").value = "";
       renderMatches();
-      renderTeams();
     };
 
     window.addMatch = async function() {
@@ -976,41 +708,6 @@
       document.getElementById("time").value = "";
     };
 
-    window.addTeam = async function() {
-      if (!logged) return;
-
-      const name = document.getElementById("teamNameInput").value.trim();
-      const logo = document.getElementById("teamLogoInput").value.trim();
-
-      if (!name) {
-        alert("Podaj nazwę drużyny.");
-        return;
-      }
-
-      const players = [];
-      for (let i = 1; i <= 5; i++) {
-        const nick = document.getElementById(`player${i}Nick`).value.trim();
-        const steam = document.getElementById(`player${i}Steam`).value.trim();
-        if (nick) {
-          players.push({ nick, steam });
-        }
-      }
-
-      await addDoc(collection(db, "druzyny"), {
-        name,
-        logo,
-        players,
-        createdAt: Date.now()
-      });
-
-      document.getElementById("teamNameInput").value = "";
-      document.getElementById("teamLogoInput").value = "";
-      for (let i = 1; i <= 5; i++) {
-        document.getElementById(`player${i}Nick`).value = "";
-        document.getElementById(`player${i}Steam`).value = "";
-      }
-    };
-
     const matchesQuery = query(collection(db, "mecze"), orderBy("createdAt", "desc"));
     onSnapshot(matchesQuery, (snapshot) => {
       matches = snapshot.docs.map((docSnap) => ({
@@ -1026,7 +723,7 @@
         id: docSnap.id,
         ...docSnap.data()
       }));
-      renderTeams();
+      updateStats();
     });
   </script>
 </body>
