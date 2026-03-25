@@ -1,156 +1,595 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>TopJoy League</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TopJoy League</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
-body {
-  margin:0;
-  background:#0b0f14;
-  color:white;
-  font-family:Arial;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(140, 23, 23, 0.28), transparent 30%),
+        radial-gradient(circle at top right, rgba(182, 107, 43, 0.18), transparent 25%),
+        linear-gradient(180deg, #0b0f14 0%, #070a0f 100%);
+      color: #fff;
+    }
 
-header {
-  background:#111821;
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-}
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-.logo {
-  font-size:28px;
-  font-weight:bold;
-  color:#ff5a5a;
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14, 19, 27, 0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+    }
 
-.container {
-  width:90%;
-  margin:auto;
-}
+    .nav {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-.box {
-  background:#161c23;
-  padding:20px;
-  margin:20px 0;
-  border-radius:10px;
-}
+    .logoWrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-.match {
-  background:#0f141a;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-  display:flex;
-  justify-content:space-between;
-}
+    .logoIcon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #8c1717, #b66b2b);
+      box-shadow: 0 0 30px rgba(182, 107, 43, 0.25);
+      font-size: 24px;
+    }
 
-button {
-  background:#ff5a5a;
-  border:none;
-  padding:10px 15px;
-  color:white;
-  cursor:pointer;
-}
+    .logoText {
+      line-height: 1;
+    }
 
-input {
-  padding:10px;
-  margin:5px 0;
-  width:100%;
-  background:#0f141a;
-  border:none;
-  color:white;
-}
-</style>
+    .logoText h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
 
+    .logoText span {
+      display: block;
+      margin-top: 6px;
+      color: #d7a15d;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .discordBtn {
+      background: linear-gradient(135deg, #8c1717, #b66b2b);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 0 20px rgba(140, 23, 23, 0.25);
+    }
+
+    .discordBtn:hover,
+    .mainBtn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .page {
+      max-width: 1300px;
+      margin: 26px auto;
+      padding: 0 20px 40px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 22px;
+    }
+
+    .hero,
+    .panel,
+    .matchesBox,
+    .adminBox,
+    .infoBox {
+      background: rgba(18, 24, 33, 0.92);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
+
+    .hero {
+      grid-column: 1 / -1;
+      padding: 30px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at top right, rgba(182,107,43,0.12), transparent 30%),
+        radial-gradient(circle at top left, rgba(140,23,23,0.16), transparent 35%),
+        rgba(18, 24, 33, 0.96);
+    }
+
+    .heroTag {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(140, 23, 23, 0.18);
+      color: #efc089;
+      border: 1px solid rgba(182, 107, 43, 0.25);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .hero h2 {
+      margin: 18px 0 12px;
+      font-size: 62px;
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+
+    .hero h2 span {
+      color: #d7a15d;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255,255,255,0.72);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      background: rgba(8, 11, 16, 0.42);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .stat small {
+      display: block;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 38px;
+      color: #efc089;
+      font-weight: 900;
+    }
+
+    .sectionTitle {
+      margin: 0;
+      padding: 22px 22px 10px;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .sectionSub {
+      padding: 0 22px 18px;
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+    }
+
+    .matchesList {
+      padding: 0 16px 16px;
+    }
+
+    .match {
+      display: grid;
+      grid-template-columns: 160px 1fr 110px;
+      gap: 16px;
+      align-items: center;
+      margin: 12px 0;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(8, 11, 16, 0.48);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .matchDate {
+      font-weight: 900;
+      font-size: 24px;
+      color: #efc089;
+    }
+
+    .matchTeams {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .matchTeams span {
+      color: #d7a15d;
+      margin: 0 8px;
+      font-weight: 900;
+    }
+
+    .matchTime {
+      text-align: right;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .adminBox {
+      padding-bottom: 18px;
+    }
+
+    .adminInner {
+      padding: 0 22px 22px;
+    }
+
+    .adminInfo {
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(8, 11, 16, 0.42);
+      border: 1px solid rgba(182, 107, 43, 0.14);
+      color: rgba(255,255,255,0.72);
+      line-height: 1.5;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 14px;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8, 11, 16, 0.7);
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mainBtn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #8c1717, #b66b2b);
+      color: white;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 0 20px rgba(140, 23, 23, 0.22);
+    }
+
+    .success {
+      color: #efc089;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .error {
+      color: #ff7373;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .infoBox {
+      padding-bottom: 18px;
+    }
+
+    .infoList {
+      padding: 0 16px 10px;
+    }
+
+    .infoItem {
+      margin: 10px 0;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(8, 11, 16, 0.48);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .infoItem strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .infoItem span {
+      color: rgba(255,255,255,0.58);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h2 {
+        font-size: 46px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .match {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .matchTime,
+      .matchDate {
+        text-align: center;
+      }
+
+      .grid2,
+      .grid3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
-  <div class="logo">🔥 TopJoy League</div>
-  <a href="https://discord.gg/BKbxhe7cyB" target="_blank">
-    <button>Discord</button>
-  </a>
-</header>
-
-<div class="container">
-
-  <div class="box">
-    <h2>Nadchodzące mecze</h2>
-    <div id="matches"></div>
-  </div>
-
-  <div class="box">
-    <h2>Admin panel</h2>
-
-    <input id="pass" placeholder="Hasło admina">
-    <button onclick="login()">Zaloguj</button>
-
-    <div id="admin" style="display:none;">
-      <input id="teamA" placeholder="Drużyna A">
-      <input id="teamB" placeholder="Drużyna B">
-      <input id="date" placeholder="Data">
-      <input id="time" placeholder="Godzina">
-
-      <button onclick="addMatch()">Dodaj mecz</button>
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-
-let password = "1234";
-let logged = false;
-
-let matches = JSON.parse(localStorage.getItem("matches")) || [];
-
-function render() {
-  let html = "";
-  matches.forEach(m => {
-    html += `
-      <div class="match">
-        <div>${m.date} ${m.time}</div>
-        <div>${m.teamA} vs ${m.teamB}</div>
+  <header>
+    <div class="nav">
+      <div class="logoWrap">
+        <div class="logoIcon">🔥</div>
+        <div class="logoText">
+          <h1>TopJoy League</h1>
+          <span>Counter-Strike 2</span>
+        </div>
       </div>
-    `;
-  });
-  document.getElementById("matches").innerHTML = html;
-}
 
-function login() {
-  let p = document.getElementById("pass").value;
-  if (p === password) {
-    logged = true;
-    document.getElementById("admin").style.display = "block";
-    alert("Zalogowano");
-  } else {
-    alert("Złe hasło");
-  }
-}
+      <a href="https://discord.gg/BKbxhe7cyB" target="_blank">
+        <button class="discordBtn">Discord</button>
+      </a>
+    </div>
+  </header>
 
-function addMatch() {
-  if (!logged) return;
+  <main class="page">
+    <section class="hero">
+      <div class="heroTag">Sezon 1 ligi</div>
+      <h2>TOPJOY <span>LEAGUE</span></h2>
+      <p>
+        Profesjonalnie wyglądająca strona ligi CS2 w klimacie esportowym.
+        Panel admina działa, a teraz dochodzi lepszy wygląd: ciemne tło,
+        czerwono-złote akcenty, nowoczesne karty i bardziej „ligowy” styl.
+      </p>
 
-  let match = {
-    teamA: document.getElementById("teamA").value,
-    teamB: document.getElementById("teamB").value,
-    date: document.getElementById("date").value,
-    time: document.getElementById("time").value
-  };
+      <div class="stats">
+        <div class="stat">
+          <small>Drużyny</small>
+          <strong id="teamsCount">0</strong>
+        </div>
+        <div class="stat">
+          <small>Mecze</small>
+          <strong id="matchesCount">0</strong>
+        </div>
+        <div class="stat">
+          <small>Status</small>
+          <strong style="font-size:28px;">ONLINE</strong>
+        </div>
+      </div>
+    </section>
 
-  matches.push(match);
-  localStorage.setItem("matches", JSON.stringify(matches));
+    <section class="matchesBox">
+      <h3 class="sectionTitle">Nadchodzące mecze</h3>
+      <div class="sectionSub">Tutaj automatycznie pojawiają się mecze dodane przez panel admina.</div>
+      <div id="matches" class="matchesList"></div>
+    </section>
 
-  render();
-}
+    <aside class="infoBox">
+      <h3 class="sectionTitle">Informacje</h3>
+      <div class="sectionSub">Krótki panel boczny bez reklam i śmieci.</div>
+      <div class="infoList">
+        <div class="infoItem">
+          <strong>Dostęp admina</strong>
+          <span>Tylko osoba z hasłem może dodawać nowe mecze.</span>
+        </div>
+        <div class="infoItem">
+          <strong>Kolory</strong>
+          <span>Całość jest ustawiona pod logo TopJoy: czerwień, złoto i ciemne tło.</span>
+        </div>
+        <div class="infoItem">
+          <strong>Discord</strong>
+          <span>Przycisk u góry przenosi prosto na Wasz serwer.</span>
+        </div>
+      </div>
+    </aside>
 
-render();
+    <section class="adminBox">
+      <h3 class="sectionTitle">Admin panel</h3>
+      <div class="sectionSub">Dodawanie meczów z poziomu strony.</div>
+      <div class="adminInner">
+        <div class="adminInfo">
+          Ta wersja działa lokalnie w przeglądarce. Panel wygląda lepiej, ale nadal działa prosto i szybko.
+        </div>
 
-</script>
+        <div id="loginBox">
+          <input id="pass" type="password" placeholder="Hasło admina">
+          <div id="loginMsg"></div>
+          <button class="mainBtn" onclick="login()">Zaloguj jako admin</button>
+        </div>
 
+        <div id="admin" style="display:none;">
+          <div class="success">Zalogowano jako admin.</div>
+          <input id="teamA" placeholder="Drużyna A">
+          <input id="teamB" placeholder="Drużyna B">
+
+          <div class="grid2">
+            <input id="date" placeholder="Data, np. 25.03.26">
+            <input id="time" placeholder="Godzina, np. 20:20">
+          </div>
+
+          <button class="mainBtn" onclick="addMatch()">Dodaj mecz</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h3 class="sectionTitle">Panel ligi</h3>
+      <div class="sectionSub">Szybki podgląd statusu.</div>
+      <div class="infoList">
+        <div class="infoItem">
+          <strong>Admin</strong>
+          <span>Maniek</span>
+        </div>
+        <div class="infoItem">
+          <strong>Tryb strony</strong>
+          <span>Esport / HLTV style</span>
+        </div>
+        <div class="infoItem">
+          <strong>Dodawanie meczów</strong>
+          <span>Przez panel po zalogowaniu.</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    let password = "1234";
+    let logged = false;
+
+    let matches = JSON.parse(localStorage.getItem("matches")) || [];
+
+    function getUniqueTeams() {
+      const teams = new Set();
+      matches.forEach(m => {
+        if (m.teamA) teams.add(m.teamA);
+        if (m.teamB) teams.add(m.teamB);
+      });
+      return teams.size;
+    }
+
+    function updateStats() {
+      document.getElementById("matchesCount").innerText = matches.length;
+      document.getElementById("teamsCount").innerText = getUniqueTeams();
+    }
+
+    function render() {
+      let html = "";
+
+      if (matches.length === 0) {
+        html = `
+          <div class="match">
+            <div class="matchDate">Brak</div>
+            <div class="matchTeams">Nie dodano jeszcze żadnych meczów</div>
+            <div class="matchTime">--:--</div>
+          </div>
+        `;
+      } else {
+        matches.forEach(m => {
+          html += `
+            <div class="match">
+              <div class="matchDate">${m.date}</div>
+              <div class="matchTeams">${m.teamA} <span>VS</span> ${m.teamB}</div>
+              <div class="matchTime">${m.time}</div>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById("matches").innerHTML = html;
+      updateStats();
+    }
+
+    function login() {
+      let p = document.getElementById("pass").value;
+      let msg = document.getElementById("loginMsg");
+
+      if (p === password) {
+        logged = true;
+        document.getElementById("admin").style.display = "block";
+        document.getElementById("loginBox").style.display = "none";
+        msg.innerHTML = "";
+      } else {
+        msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
+      }
+    }
+
+    function addMatch() {
+      if (!logged) return;
+
+      let teamA = document.getElementById("teamA").value.trim();
+      let teamB = document.getElementById("teamB").value.trim();
+      let date = document.getElementById("date").value.trim();
+      let time = document.getElementById("time").value.trim();
+
+      if (!teamA || !teamB || !date || !time) {
+        alert("Uzupełnij wszystkie pola.");
+        return;
+      }
+
+      let match = { teamA, teamB, date, time };
+      matches.unshift(match);
+
+      localStorage.setItem("matches", JSON.stringify(matches));
+      render();
+
+      document.getElementById("teamA").value = "";
+      document.getElementById("teamB").value = "";
+      document.getElementById("date").value = "";
+      document.getElementById("time").value = "";
+    }
+
+    render();
+  </script>
 </body>
 </html>
