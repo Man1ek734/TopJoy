@@ -1,323 +1,156 @@
-import { useMemo, useState } from 'react';
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>TopJoy League</title>
 
-export default function TopJoyLeagueSite() {
-  const adminPassword = 'TOPJOY2026';
-
-  const [adminLogged, setAdminLogged] = useState(false);
-  const [passwordInput, setPasswordInput] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [matches, setMatches] = useState([
-    { id: 1, date: '27.03.2026', time: '21:00', format: 'BO1', teamA: 'TopJoy Rebels', teamB: 'Inferno Crew', scoreA: '', scoreB: '', status: 'Nadchodzący' },
-    { id: 2, date: '29.03.2026', time: '20:30', format: 'BO3', teamA: 'Ancient Wolves', teamB: 'Mirage Unit', scoreA: '', scoreB: '', status: 'Nadchodzący' },
-    { id: 3, date: '31.03.2026', time: '19:30', format: 'BO1', teamA: 'Nuke Squad', teamB: 'TopJoy Rebels', scoreA: '11', scoreB: '13', status: 'Zakończony' },
-  ]);
-
-  const [form, setForm] = useState({
-    teamA: '',
-    teamB: '',
-    date: '',
-    time: '',
-    format: 'BO1',
-    scoreA: '',
-    scoreB: '',
-  });
-
-  const teams = useMemo(() => {
-    const map = new Map();
-
-    matches.forEach((match) => {
-      [match.teamA, match.teamB].forEach((team) => {
-        if (!team) return;
-        if (!map.has(team)) {
-          map.set(team, { team, played: 0, wins: 0, losses: 0, points: 0 });
-        }
-      });
-
-      if (match.status === 'Zakończony' && match.scoreA !== '' && match.scoreB !== '') {
-        const a = Number(match.scoreA);
-        const b = Number(match.scoreB);
-        const teamA = map.get(match.teamA);
-        const teamB = map.get(match.teamB);
-
-        if (teamA && teamB) {
-          teamA.played += 1;
-          teamB.played += 1;
-
-          if (a > b) {
-            teamA.wins += 1;
-            teamA.points += 3;
-            teamB.losses += 1;
-          } else if (b > a) {
-            teamB.wins += 1;
-            teamB.points += 3;
-            teamA.losses += 1;
-          }
-        }
-      }
-    });
-
-    return Array.from(map.values()).sort((a, b) => b.points - a.points || b.wins - a.wins || a.losses - b.losses);
-  }, [matches]);
-
-  const latestResults = matches.filter((m) => m.status === 'Zakończony').slice(-5).reverse();
-  const upcomingMatches = matches.filter((m) => m.status !== 'Zakończony').slice(0, 6);
-
-  const submitLogin = (e) => {
-    e.preventDefault();
-    if (passwordInput === adminPassword) {
-      setAdminLogged(true);
-      setLoginError('');
-      setPasswordInput('');
-    } else {
-      setLoginError('Nieprawidłowe hasło admina.');
-    }
-  };
-
-  const addMatch = (e) => {
-    e.preventDefault();
-    if (!adminLogged) return;
-    if (!form.teamA || !form.teamB || !form.date || !form.time) return;
-
-    const finished = form.scoreA !== '' && form.scoreB !== '';
-
-    setMatches((prev) => [
-      {
-        id: Date.now(),
-        ...form,
-        status: finished ? 'Zakończony' : 'Nadchodzący',
-      },
-      ...prev,
-    ]);
-
-    setForm({
-      teamA: '',
-      teamB: '',
-      date: '',
-      time: '',
-      format: 'BO1',
-      scoreA: '',
-      scoreB: '',
-    });
-  };
-
-  return (
-    <div className="min-h-screen bg-[#090b0f] text-white">
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(126,21,21,0.25),transparent_26%),radial-gradient(circle_at_left,rgba(182,107,43,0.15),transparent_28%),linear-gradient(180deg,#11161d_0%,#090b0f_35%,#090b0f_100%)]" />
-
-      <header className="border-b border-white/10 bg-[#1a212a]/95 shadow-[0_10px_40px_rgba(0,0,0,0.35)] backdrop-blur">
-        <div className="mx-auto flex max-w-[1380px] items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#7f1212] via-[#b66b2b] to-[#2b0f0f] text-xl shadow-[0_0_25px_rgba(182,107,43,0.28)]">
-              🔥
-            </div>
-            <div>
-              <div className="text-[34px] font-black leading-none tracking-tight">TOPJOY</div>
-              <div className="text-sm font-semibold uppercase tracking-[0.32em] text-[#d3a66c]">League</div>
-            </div>
-          </div>
-
-          <nav className="hidden items-center gap-8 text-sm font-bold uppercase tracking-[0.14em] text-white/70 lg:flex">
-            <a href="#home" className="text-white">Strona główna</a>
-            <a href="#table" className="hover:text-white">Tabela</a>
-            <a href="#results" className="hover:text-white">Wyniki</a>
-            <a href="#teams" className="hover:text-white">Drużyny</a>
-            <a href="#admin" className="hover:text-white">Admin</a>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/80">PL</div>
-            <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/80">Maniek</div>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto grid max-w-[1380px] gap-4 px-4 py-4 lg:grid-cols-[290px_minmax(0,1fr)_320px]">
-        <aside className="space-y-4">
-          <section className="overflow-hidden rounded-md border border-white/10 bg-[#202832] shadow-[0_8px_25px_rgba(0,0,0,0.25)]">
-            <div className="border-b border-white/10 bg-[#1b222b] px-4 py-3 text-xs font-black uppercase tracking-[0.22em] text-white/55">Top ranking</div>
-            <div className="space-y-1 p-2">
-              {teams.slice(0, 6).map((team, index) => (
-                <div key={team.team} className="flex items-center justify-between rounded px-3 py-3 hover:bg-white/5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 text-sm font-black text-[#d3a66c]">{index + 1}.</div>
-                    <div>
-                      <div className="font-bold leading-none">{team.team}</div>
-                      <div className="mt-1 text-xs text-white/45">{team.wins}W / {team.losses}L</div>
-                    </div>
-                  </div>
-                  <div className="text-lg font-black text-[#e6bc86]">{team.points}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="overflow-hidden rounded-md border border-white/10 bg-[#202832]">
-            <div className="border-b border-white/10 bg-[#1b222b] px-4 py-3 text-xs font-black uppercase tracking-[0.22em] text-white/55">Aktualności ligi</div>
-            <div className="space-y-3 p-4 text-sm text-white/75">
-              <div className="rounded bg-white/5 p-3">Sezon 1 wystartował. Rejestracja drużyn zamknięta.</div>
-              <div className="rounded bg-white/5 p-3">Wyniki dodane przez panel admina aktualizują tabelę automatycznie.</div>
-              <div className="rounded bg-white/5 p-3">Kolory strony dopasowane do logo TopJoy.</div>
-            </div>
-          </section>
-        </aside>
-
-        <section className="space-y-4">
-          <section id="home" className="overflow-hidden rounded-md border border-white/10 bg-[#202832] shadow-[0_8px_25px_rgba(0,0,0,0.25)]">
-            <div className="grid gap-0 xl:grid-cols-[1.1fr_0.9fr]">
-              <div className="p-6">
-                <div className="mb-3 inline-flex items-center gap-2 rounded border border-[#b66b2b]/40 bg-[#2a1612] px-3 py-1 text-xs font-black uppercase tracking-[0.22em] text-[#efc089]">
-                  Liga wystartowała
-                </div>
-                <h1 className="text-5xl font-black leading-none tracking-tight md:text-6xl">TOPJOY <span className="text-[#d3a66c]">LEAGUE</span></h1>
-                <p className="mt-4 max-w-2xl text-base text-white/70">
-                  Strona w stylu esportowym inspirowana dużymi portalami, ale bez reklam i bez zbędnych boksów z meczami po bokach. Wszystko skupione na Twojej lidze.
-                </p>
-                <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                  {[
-                    ['Drużyny', String(teams.length || 0)],
-                    ['Mecze', String(matches.length)],
-                    ['Wyniki', String(latestResults.length)],
-                  ].map(([label, value]) => (
-                    <div key={label} className="rounded-md border border-white/10 bg-[#161c23] p-4">
-                      <div className="text-xs font-black uppercase tracking-[0.22em] text-white/45">{label}</div>
-                      <div className="mt-2 text-4xl font-black text-[#efc089]">{value}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-l border-white/10 bg-[linear-gradient(135deg,rgba(127,18,18,0.25),rgba(9,11,15,0.8),rgba(182,107,43,0.18))] p-6">
-                <div className="mb-3 text-xs font-black uppercase tracking-[0.22em] text-white/45">Panel ligi</div>
-                <div className="rounded-md border border-white/10 bg-[#161c23]/80 p-4">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="text-white/55">Status</span>
-                    <span className="rounded bg-[#7f1212] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white">Online</span>
-                  </div>
-                  <div className="mt-4 space-y-3 text-sm text-white/75">
-                    <div className="flex justify-between rounded bg-white/5 px-3 py-3"><span>Admin</span><span className="font-black text-white">Maniek</span></div>
-                    <div className="flex justify-between rounded bg-white/5 px-3 py-3"><span>Dostęp do edycji</span><span className="font-black text-[#efc089]">Tylko Ty</span></div>
-                    <div className="flex justify-between rounded bg-white/5 px-3 py-3"><span>Tryb strony</span><span className="font-black text-white">HLTV style</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="results" className="overflow-hidden rounded-md border border-white/10 bg-[#202832]">
-            <div className="border-b border-white/10 bg-[#1b222b] px-5 py-3 text-sm font-black uppercase tracking-[0.18em] text-white/60">Ostatnie wyniki</div>
-            <div className="space-y-2 p-3">
-              {latestResults.length === 0 ? (
-                <div className="rounded bg-white/5 p-4 text-white/55">Brak rozegranych meczów.</div>
-              ) : (
-                latestResults.map((match) => (
-                  <div key={match.id} className="grid items-center gap-3 rounded border border-white/10 bg-[#161c23] px-4 py-4 md:grid-cols-[1fr_120px_1fr_130px]">
-                    <div className="text-right font-bold">{match.teamA}</div>
-                    <div className="text-center text-2xl font-black text-[#efc089]">{match.scoreA}:{match.scoreB}</div>
-                    <div className="font-bold">{match.teamB}</div>
-                    <div className="text-right text-sm text-white/45">{match.date} • {match.format}</div>
-                  </div>
-                ))
-              )}
-            </div>
-          </section>
-
-          <section id="table" className="overflow-hidden rounded-md border border-white/10 bg-[#202832]">
-            <div className="border-b border-white/10 bg-[#1b222b] px-5 py-3 text-sm font-black uppercase tracking-[0.18em] text-white/60">Tabela ligi</div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[700px]">
-                <thead className="bg-[#161c23] text-xs font-black uppercase tracking-[0.2em] text-white/45">
-                  <tr>
-                    <th className="px-4 py-4 text-left">#</th>
-                    <th className="px-4 py-4 text-left">Drużyna</th>
-                    <th className="px-4 py-4 text-left">M</th>
-                    <th className="px-4 py-4 text-left">W</th>
-                    <th className="px-4 py-4 text-left">P</th>
-                    <th className="px-4 py-4 text-left">Pkt</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {teams.map((team, index) => (
-                    <tr key={team.team} className="border-t border-white/10 bg-[#202832] hover:bg-white/5">
-                      <td className="px-4 py-4 font-black text-[#d3a66c]">{index + 1}</td>
-                      <td className="px-4 py-4 font-bold">{team.team}</td>
-                      <td className="px-4 py-4">{team.played}</td>
-                      <td className="px-4 py-4">{team.wins}</td>
-                      <td className="px-4 py-4">{team.losses}</td>
-                      <td className="px-4 py-4 text-xl font-black text-[#efc089]">{team.points}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </section>
-
-        <aside className="space-y-4">
-          <section className="overflow-hidden rounded-md border border-white/10 bg-[#202832]" id="teams">
-            <div className="border-b border-white/10 bg-[#1b222b] px-4 py-3 text-xs font-black uppercase tracking-[0.22em] text-white/55">Nadchodzące mecze</div>
-            <div className="space-y-2 p-3">
-              {upcomingMatches.map((match) => (
-                <div key={match.id} className="rounded border border-white/10 bg-[#161c23] p-4">
-                  <div className="mb-2 flex items-center justify-between text-xs font-black uppercase tracking-[0.18em] text-white/45">
-                    <span>{match.format}</span>
-                    <span>{match.date}</span>
-                  </div>
-                  <div className="mb-3 text-center text-sm font-bold text-white/85">{match.teamA} <span className="text-[#d3a66c]">vs</span> {match.teamB}</div>
-                  <div className="text-center text-2xl font-black text-[#efc089]">{match.time}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="admin" className="overflow-hidden rounded-md border border-[#b66b2b]/25 bg-[#202832] shadow-[0_8px_25px_rgba(0,0,0,0.25)]">
-            <div className="border-b border-white/10 bg-[#241715] px-4 py-3 text-xs font-black uppercase tracking-[0.22em] text-[#efc089]">Admin only</div>
-            <div className="p-4">
-              {!adminLogged ? (
-                <form onSubmit={submitLogin} className="space-y-3">
-                  <div className="text-sm text-white/70">
-                    Tylko Ty masz dostęp do dodawania meczów. Ta wersja działa na haśle w panelu strony.
-                  </div>
-                  <input
-                    type="password"
-                    value={passwordInput}
-                    onChange={(e) => setPasswordInput(e.target.value)}
-                    placeholder="Hasło admina"
-                    className="w-full rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30"
-                  />
-                  {loginError ? <div className="text-sm font-bold text-red-400">{loginError}</div> : null}
-                  <button className="w-full rounded bg-gradient-to-r from-[#7f1212] to-[#b66b2b] px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-white">
-                    Zaloguj jako admin
-                  </button>
-                </form>
-              ) : (
-                <form onSubmit={addMatch} className="space-y-3">
-                  <div className="rounded border border-[#b66b2b]/20 bg-[#161c23] px-3 py-3 text-sm font-bold text-[#efc089]">
-                    Zalogowany jako admin.
-                  </div>
-                  <input value={form.teamA} onChange={(e) => setForm({ ...form, teamA: e.target.value })} placeholder="Drużyna A" className="w-full rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30" />
-                  <input value={form.teamB} onChange={(e) => setForm({ ...form, teamB: e.target.value })} placeholder="Drużyna B" className="w-full rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30" />
-                  <div className="grid grid-cols-2 gap-3">
-                    <input value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} placeholder="Data" className="w-full rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30" />
-                    <input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="Godzina" className="w-full rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30" />
-                  </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    <select value={form.format} onChange={(e) => setForm({ ...form, format: e.target.value })} className="rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none">
-                      <option>BO1</option>
-                      <option>BO3</option>
-                      <option>BO5</option>
-                    </select>
-                    <input value={form.scoreA} onChange={(e) => setForm({ ...form, scoreA: e.target.value })} placeholder="Score A" className="rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30" />
-                    <input value={form.scoreB} onChange={(e) => setForm({ ...form, scoreB: e.target.value })} placeholder="Score B" className="rounded border border-white/10 bg-[#161c23] px-4 py-3 outline-none placeholder:text-white/30" />
-                  </div>
-                  <button className="w-full rounded bg-gradient-to-r from-[#7f1212] to-[#b66b2b] px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-white">
-                    Dodaj mecz
-                  </button>
-                </form>
-              )}
-            </div>
-          </section>
-        </aside>
-      </main>
-    </div>
-  );
+<style>
+body {
+  margin:0;
+  background:#0b0f14;
+  color:white;
+  font-family:Arial;
 }
+
+header {
+  background:#111821;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.logo {
+  font-size:28px;
+  font-weight:bold;
+  color:#ff5a5a;
+}
+
+.container {
+  width:90%;
+  margin:auto;
+}
+
+.box {
+  background:#161c23;
+  padding:20px;
+  margin:20px 0;
+  border-radius:10px;
+}
+
+.match {
+  background:#0f141a;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+}
+
+button {
+  background:#ff5a5a;
+  border:none;
+  padding:10px 15px;
+  color:white;
+  cursor:pointer;
+}
+
+input {
+  padding:10px;
+  margin:5px 0;
+  width:100%;
+  background:#0f141a;
+  border:none;
+  color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🔥 TopJoy League</div>
+  <a href="https://discord.gg/BKbxhe7cyB" target="_blank">
+    <button>Discord</button>
+  </a>
+</header>
+
+<div class="container">
+
+  <div class="box">
+    <h2>Nadchodzące mecze</h2>
+    <div id="matches"></div>
+  </div>
+
+  <div class="box">
+    <h2>Admin panel</h2>
+
+    <input id="pass" placeholder="Hasło admina">
+    <button onclick="login()">Zaloguj</button>
+
+    <div id="admin" style="display:none;">
+      <input id="teamA" placeholder="Drużyna A">
+      <input id="teamB" placeholder="Drużyna B">
+      <input id="date" placeholder="Data">
+      <input id="time" placeholder="Godzina">
+
+      <button onclick="addMatch()">Dodaj mecz</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let password = "1234";
+let logged = false;
+
+let matches = JSON.parse(localStorage.getItem("matches")) || [];
+
+function render() {
+  let html = "";
+  matches.forEach(m => {
+    html += `
+      <div class="match">
+        <div>${m.date} ${m.time}</div>
+        <div>${m.teamA} vs ${m.teamB}</div>
+      </div>
+    `;
+  });
+  document.getElementById("matches").innerHTML = html;
+}
+
+function login() {
+  let p = document.getElementById("pass").value;
+  if (p === password) {
+    logged = true;
+    document.getElementById("admin").style.display = "block";
+    alert("Zalogowano");
+  } else {
+    alert("Złe hasło");
+  }
+}
+
+function addMatch() {
+  if (!logged) return;
+
+  let match = {
+    teamA: document.getElementById("teamA").value,
+    teamB: document.getElementById("teamB").value,
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value
+  };
+
+  matches.push(match);
+  localStorage.setItem("matches", JSON.stringify(matches));
+
+  render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
