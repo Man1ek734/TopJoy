@@ -417,7 +417,7 @@
       <div class="heroLeft">
         <div class="heroTag">Sezon 1 ligi</div>
         <h2>TOPJOY <span>LEAGUE</span></h2>
-        <p>Nowy wygląd strony w stylu HLTV + FACEIT. Dodawaj mecze, edytuj wyniki po zakończeniu i zarządzaj ligą z panelu admina.</p>
+        <p>Nowy wygląd strony w stylu HLTV + FACEIT. Dodawaj mecze, edytuj wyniki po zakończeniu i losuj pary jednym kliknięciem jako admin.</p>
       </div>
 
       <div class="heroRight">
@@ -443,15 +443,15 @@
       <div class="panelBody">
         <div class="infoCard">
           <strong>Edycja meczu</strong>
-          <span>Po zalogowaniu admina możesz edytować mecz, wpisać wynik i oznaczyć go jako zakończony.</span>
+          <span>Po zalogowaniu admina możesz kliknąć Edytuj, wpisać wynik i oznaczyć mecz jako zakończony.</span>
+        </div>
+        <div class="infoCard">
+          <strong>Rozlosuj mecze</strong>
+          <span>Przycisk losowania widzi tylko admin po zalogowaniu.</span>
         </div>
         <div class="infoCard">
           <strong>Result</strong>
-          <span>Mecze ze statusem finished znikają z głównej i przechodzą do zakładki Result.</span>
-        </div>
-        <div class="infoCard">
-          <strong>Tabela</strong>
-          <span>W tabeli możesz kliknąć drużynę i zobaczyć jej cały skład oraz punkty.</span>
+          <span>Po ustawieniu statusu finished mecz znika z głównej i przechodzi do Result.</span>
         </div>
       </div>
     </aside>
@@ -459,11 +459,12 @@
     <section class="panel">
       <div class="sectionHead">
         <h3>Admin panel</h3>
-        <span>Dodawanie i edycja meczów</span>
+        <span>Dodawanie, edycja i losowanie</span>
       </div>
       <div class="panelBody">
         <div class="adminInfo">
           Dodaj nowy mecz albo kliknij Edytuj przy istniejącym. Po ustawieniu statusu finished spotkanie przejdzie do Result.
+          Możesz też kliknąć „Rozlosuj mecze”, a system automatycznie sparuje drużyny.
         </div>
 
         <div id="loginBox">
@@ -495,6 +496,7 @@
 
           <button class="mainBtn" id="matchActionBtn" onclick="saveMatch()">Dodaj mecz</button>
           <button class="subBtn" id="cancelEditBtn" onclick="cancelEdit()" style="display:none;margin-top:10px;">Anuluj edycję</button>
+          <button class="subBtn" onclick="drawMatches()" style="margin-top:10px;">Rozlosuj mecze</button>
           <button class="subBtn" onclick="logout()" style="margin-top:10px;">Wyloguj</button>
         </div>
       </div>
@@ -524,7 +526,17 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      deleteDoc,
+      doc,
+      updateDoc,
+      onSnapshot,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
@@ -585,6 +597,15 @@
       }).join("");
 
       updateStats();
+    }
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
     }
 
     window.deleteMatch = async function(id) {
@@ -672,6 +693,54 @@
       }
 
       cancelEdit();
+    };
+
+    window.drawMatches = async function() {
+      if (!logged) return;
+
+      if (teams.length < 2) {
+        alert("Za mało drużyn do losowania.");
+        return;
+      }
+
+      const unfinishedMatches = matches.filter(m => m.status !== "finished");
+      if (unfinishedMatches.length > 0) {
+        const ok = confirm("Masz już aktywne mecze. Na pewno chcesz rozlosować nowe?");
+        if (!ok) return;
+      }
+
+      const shuffledTeams = shuffleArray(teams);
+      const pairs = [];
+
+      for (let i = 0; i < shuffledTeams.length; i += 2) {
+        if (shuffledTeams[i + 1]) {
+          pairs.push([shuffledTeams[i], shuffledTeams[i + 1]]);
+        }
+      }
+
+      if (pairs.length === 0) {
+        alert("Nie udało się utworzyć par.");
+        return;
+      }
+
+      for (const pair of pairs) {
+        await addDoc(collection(db, "mecze"), {
+          teamA: pair[0].name,
+          teamB: pair[1].name,
+          date: "TBD",
+          time: "TBD",
+          scoreA: "",
+          scoreB: "",
+          status: "upcoming",
+          createdAt: Date.now()
+        });
+      }
+
+      if (shuffledTeams.length % 2 === 1) {
+        alert("Mecze zostały rozlosowane. Jedna drużyna została bez pary, bo liczba drużyn jest nieparzysta.");
+      } else {
+        alert("Mecze zostały rozlosowane.");
+      }
     };
 
     onSnapshot(query(collection(db, "mecze"), orderBy("createdAt", "desc")), (snapshot) => {
