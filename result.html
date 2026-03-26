@@ -42,7 +42,12 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
     }
+
+    .logoWrap:hover { transform: scale(1.03); }
 
     .siteLogo {
       width: 72px;
@@ -149,10 +154,7 @@
       gap: 22px;
     }
 
-    .hero,
-    .resultsBox,
-    .adminBox,
-    .infoBox {
+    .hero, .resultsBox, .adminBox, .infoBox {
       background: rgba(18, 24, 33, 0.92);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
@@ -212,9 +214,7 @@
       font-size: 14px;
     }
 
-    .resultsList,
-    .adminInner,
-    .infoList {
+    .resultsList, .adminInner, .infoList {
       padding: 0 16px 16px;
     }
 
@@ -377,13 +377,13 @@
 <body>
   <header>
     <div class="nav">
-      <div class="logoWrap">
+      <a href="index.html" class="logoWrap">
         <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
           <h1>TopJoy League</h1>
-          <span>Counter-Strike 2</span>
+          <span>COUNTER-STRIKE 2</span>
         </div>
-      </div>
+      </a>
 
       <div class="navButtons">
         <a href="index.html"><button class="sectionBtn">Home</button></a>
@@ -398,10 +398,7 @@
     <section class="hero">
       <div class="heroTag">Wyniki meczów</div>
       <h2>TOPJOY <span>RESULT</span></h2>
-      <p>
-        Tutaj trafiają wszystkie rozegrane mecze. Po zalogowaniu możesz je edytować, poprawiać wynik,
-        usuwać albo cofnąć z powrotem do nadchodzących.
-      </p>
+      <p>Tutaj trafiają wszystkie rozegrane mecze. Po zalogowaniu możesz je edytować, poprawiać wynik, usuwać albo cofnąć z powrotem do nadchodzących.</p>
     </section>
 
     <section class="resultsBox">
@@ -414,9 +411,7 @@
       <h3 class="sectionTitle">Panel edycji</h3>
       <div class="sectionSub">Tu edytujesz rozegrane mecze.</div>
       <div class="adminInner">
-        <div class="adminInfo">
-          Kliknij Edytuj przy meczu, a tutaj wczyta się formularz. Możesz zmienić wynik albo status meczu.
-        </div>
+        <div class="adminInfo">Kliknij Edytuj przy meczu, a tutaj wczyta się formularz. Możesz zmienić wynik albo status meczu.</div>
 
         <div id="loginBox">
           <input id="pass" placeholder="Hasło admina">
@@ -426,13 +421,14 @@
 
         <div id="admin" style="display:none;">
           <div class="success">Zalogowano jako admin.</div>
-
           <input id="teamA" placeholder="Drużyna A">
           <input id="teamB" placeholder="Drużyna B">
+
           <div class="grid2">
             <input id="date" placeholder="Data">
             <input id="time" placeholder="Godzina">
           </div>
+
           <div class="grid2">
             <input id="scoreA" placeholder="Wynik A">
             <input id="scoreB" placeholder="Wynik B">
@@ -461,16 +457,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      onSnapshot,
-      query,
-      orderBy,
-      deleteDoc,
-      doc,
-      updateDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
