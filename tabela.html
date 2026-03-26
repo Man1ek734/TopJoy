@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabela - TopJoy League</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(140, 23, 23, 0.28), transparent 30%),
+        radial-gradient(circle at top right, rgba(182, 107, 43, 0.18), transparent 25%),
+        linear-gradient(180deg, #0b0f14 0%, #070a0f 100%);
+      color: #fff;
+    }
+    a { text-decoration: none; color: inherit; }
+    header {
+      position: sticky; top: 0; z-index: 50; background: rgba(14, 19, 27, 0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+    }
+    .nav {
+      max-width: 1300px; margin: 0 auto; padding: 18px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logoWrap { display: flex; align-items: center; gap: 14px; }
+    .logoIcon {
+      width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #8c1717, #b66b2b); box-shadow: 0 0 30px rgba(182,107,43,.25); font-size: 24px;
+    }
+    .logoText h1 { margin: 0; font-size: 34px; font-weight: 900; letter-spacing: -1px; }
+    .logoText span {
+      display: block; margin-top: 6px; color: #d7a15d; text-transform: uppercase;
+      letter-spacing: 0.35em; font-size: 11px; font-weight: 700;
+    }
+    .navButtons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .sectionBtn, .discordBtn, .mainBtn, .saveBtn {
+      border: none; border-radius: 12px; cursor: pointer; font-weight: 800; transition: .2s ease;
+    }
+    .sectionBtn {
+      background: rgba(255,255,255,.04); color: #efc089; border: 1px solid rgba(182,107,43,.25);
+      padding: 13px 20px;
+    }
+    .discordBtn {
+      background: linear-gradient(135deg, #8c1717, #b66b2b); color: white; padding: 13px 22px;
+      box-shadow: 0 0 15px rgba(182,107,43,.25), 0 0 30px rgba(140,23,23,.15);
+    }
+    .sectionBtn:hover, .discordBtn:hover, .mainBtn:hover, .saveBtn:hover {
+      transform: translateY(-2px); filter: brightness(1.06);
+    }
+    .page { max-width: 1300px; margin: 26px auto; padding: 0 20px 40px; display: grid; gap: 22px; }
+    .hero, .tableBox, .loginBox {
+      background: rgba(18, 24, 33, 0.92);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
+    .hero { padding: 30px; }
+    .heroTag {
+      display: inline-block; padding: 8px 12px; border-radius: 999px;
+      background: rgba(140, 23, 23, 0.18); color: #efc089; border: 1px solid rgba(182,107,43,.25);
+      font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .18em;
+    }
+    .hero h2 { margin: 18px 0 12px; font-size: 56px; font-weight: 900; }
+    .hero h2 span { color: #d7a15d; }
+    .hero p { color: rgba(255,255,255,.72); font-size: 18px; line-height: 1.6; margin: 0; }
+    .sectionTitle { margin: 0; padding: 22px 22px 10px; font-size: 30px; font-weight: 900; }
+    .sectionSub { padding: 0 22px 18px; color: rgba(255,255,255,.5); font-size: 14px; }
+    .tableInner, .loginInner { padding: 0 16px 16px; }
+    .row {
+      display: grid; grid-template-columns: 70px 1.2fr 120px 220px;
+      gap: 12px; align-items: center; margin: 12px 0; padding: 16px;
+      border-radius: 16px; background: rgba(8,11,16,.48); border: 1px solid rgba(255,255,255,.06);
+    }
+    .pos { font-size: 24px; font-weight: 900; color: #efc089; }
+    .team { font-size: 20px; font-weight: 800; }
+    .pts { font-size: 24px; font-weight: 900; color: #efc089; }
+    .adminPts {
+      display: flex; gap: 8px; align-items: center;
+    }
+    input {
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08);
+      background: rgba(8,11,16,.7); color: #fff; outline: none; font-size: 15px;
+    }
+    .mainBtn, .saveBtn {
+      background: linear-gradient(135deg, #8c1717, #b66b2b); color: #fff; padding: 12px 14px;
+    }
+    .error { color: #ff7373; font-weight: 700; margin-top: 10px; }
+    .ok { color: #efc089; font-weight: 700; margin-top: 10px; }
+    @media (max-width: 980px) {
+      .nav { flex-direction: column; align-items: flex-start; }
+      .row { grid-template-columns: 1fr; text-align: center; }
+      .adminPts { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logoWrap">
+        <div class="logoIcon">🔥</div>
+        <div class="logoText">
+          <h1>TopJoy League</h1>
+          <span>Counter-Strike 2</span>
+        </div>
+      </div>
+      <div class="navButtons">
+        <a href="index.html"><button class="sectionBtn">Strona główna</button></a>
+        <a href="druzyny.html"><button class="sectionBtn">Drużyny</button></a>
+        <a href="result.html"><button class="sectionBtn">Result</button></a>
+        <a href="https://discord.gg/BKbxhe7cyB" target="_blank"><button class="discordBtn">Discord</button></a>
+      </div>
+    </div>
+  </header>
 
+  <main class="page">
+    <section class="hero">
+      <div class="heroTag">Tabela ligi</div>
+      <h2>TOPJOY <span>TABELA</span></h2>
+      <p>Tutaj widać punkty drużyn. Po zalogowaniu jako admin możesz po prawej zmieniać punkty każdej drużyny.</p>
+    </section>
+
+    <section class="loginBox">
+      <h3 class="sectionTitle">Logowanie admina</h3>
+      <div class="loginInner">
+        <input id="pass" type="password" placeholder="Hasło admina">
+        <button class="mainBtn" onclick="login()">Zaloguj</button>
+        <div id="msg"></div>
+      </div>
+    </section>
+
+    <section class="tableBox">
+      <h3 class="sectionTitle">Tabela ligi</h3>
+      <div class="sectionSub">Drużyny sortowane od największej liczby punktów.</div>
+      <div id="tableInner" class="tableInner"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
+      authDomain: "topjoy-league.firebaseapp.com",
+      projectId: "topjoy-league",
+      storageBucket: "topjoy-league.firebasestorage.app",
+      messagingSenderId: "148599961147",
+      appId: "1:148599961147:web:ea5f17ba9114c0dda94e1e",
+      measurementId: "G-0ETCB1NC16"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let logged = false;
+    let teams = [];
+    const password = "2312";
+
+    window.login = function() {
+      const p = document.getElementById("pass").value;
+      const msg = document.getElementById("msg");
+      if (p === password) {
+        logged = true;
+        msg.innerHTML = '<div class="ok">Zalogowano jako admin.</div>';
+        render();
+      } else {
+        msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
+      }
+    };
+
+    window.savePoints = async function(teamId) {
+      if (!logged) return;
+      const input = document.getElementById(`pts-${teamId}`);
+      const value = Number(input.value);
+      if (Number.isNaN(value)) {
+        alert("Podaj liczbę.");
+        return;
+      }
+      await updateDoc(doc(db, "druzyny", teamId), { points: value });
+    };
+
+    function render() {
+      const box = document.getElementById("tableInner");
+      const sorted = [...teams].sort((a, b) => (b.points || 0) - (a.points || 0));
+
+      if (sorted.length === 0) {
+        box.innerHTML = `<div class="row"><div class="pos">-</div><div class="team">Brak drużyn</div><div class="pts">0</div><div></div></div>`;
+        return;
+      }
+
+      box.innerHTML = sorted.map((team, index) => `
+        <div class="row">
+          <div class="pos">${index + 1}</div>
+          <div class="team">${team.name || "-"}</div>
+          <div class="pts">${team.points || 0}</div>
+          <div>
+            ${
+              logged
+                ? `<div class="adminPts">
+                    <input id="pts-${team.id}" type="number" value="${team.points || 0}" placeholder="Punkty">
+                    <button class="saveBtn" onclick="savePoints('${team.id}')">Zapisz</button>
+                  </div>`
+                : `<span style="color:rgba(255,255,255,.45)">Zaloguj admina, aby edytować</span>`
+            }
+          </div>
+        </div>
+      `).join("");
+    }
+
+    onSnapshot(query(collection(db, "druzyny"), orderBy("createdAt", "desc")), (snapshot) => {
+      teams = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      render();
+    });
+  </script>
+</body>
+</html>
