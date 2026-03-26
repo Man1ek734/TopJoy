@@ -42,7 +42,12 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
     }
+
+    .logoWrap:hover { transform: scale(1.03); }
 
     .siteLogo {
       width: 72px;
@@ -227,6 +232,14 @@
       border-radius: 16px;
       background: rgba(8,11,16,0.48);
       border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .teamCard:hover {
+      transform: translateY(-2px);
+      border-color: rgba(182,107,43,0.35);
+      box-shadow: 0 0 20px rgba(182,107,43,0.12);
     }
 
     .teamLogo {
@@ -390,13 +403,13 @@
 <body>
   <header>
     <div class="nav">
-      <div class="logoWrap">
+      <a href="index.html" class="logoWrap">
         <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
           <h1>TopJoy League</h1>
-          <span>Counter-Strike 2</span>
+          <span>COUNTER-STRIKE 2</span>
         </div>
-      </div>
+      </a>
 
       <div class="navButtons">
         <a href="index.html"><button class="sectionBtn">Home</button></a>
@@ -411,14 +424,12 @@
     <section class="hero">
       <div class="heroTag">Zakładka drużyn</div>
       <h2>TOPJOY <span>DRUŻYNY</span></h2>
-      <p>
-        Tutaj dodajesz drużyny, logo, nicki graczy i linki do Steam. Po kliknięciu drużyny otwiera się jej profil.
-      </p>
+      <p>Tutaj dodajesz drużyny, logo, nicki graczy i linki do Steam. Po kliknięciu całej drużyny otwiera się jej profil.</p>
     </section>
 
     <section class="teamsBox" id="teamsSection">
       <h3 class="sectionTitle">Drużyny</h3>
-      <div class="sectionSub">Kliknij drużynę, aby zobaczyć skład i linki do Steam.</div>
+      <div class="sectionSub">Kliknij gdziekolwiek na drużynie, aby zobaczyć skład i linki do Steam.</div>
       <div id="teamsList" class="teamsList"></div>
     </section>
 
@@ -434,9 +445,7 @@
       <h3 class="sectionTitle">Panel drużyn</h3>
       <div class="sectionSub">Dodawanie i usuwanie drużyn z poziomu strony.</div>
       <div class="adminInner">
-        <div class="adminInfo">
-          Logujesz się na stronie, dodajesz drużynę i od razu widzą ją wszyscy.
-        </div>
+        <div class="adminInfo">Logujesz się na stronie, dodajesz drużynę i od razu widzą ją wszyscy.</div>
 
         <div id="loginBox">
           <input id="pass" type="password" placeholder="Hasło admina">
@@ -480,16 +489,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      deleteDoc,
-      doc,
-      onSnapshot,
-      query,
-      orderBy
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
@@ -517,10 +517,9 @@
 
     function renderTeams() {
       const teamsList = document.getElementById("teamsList");
-      let html = "";
 
       if (teams.length === 0) {
-        html = `
+        teamsList.innerHTML = `
           <div class="teamCard">
             <div class="teamLogoFallback">T</div>
             <div>
@@ -530,23 +529,22 @@
             <div></div>
           </div>
         `;
-      } else {
-        teams.forEach((team) => {
-          const playersCount = Array.isArray(team.players) ? team.players.length : 0;
-          html += `
-            <div class="teamCard">
-              ${createLogoHtml(team.logo, team.name)}
-              <div>
-                <div class="teamName">${team.name || "-"}</div>
-                <div class="teamPlayersCount">Graczy: ${playersCount}</div>
-              </div>
-              <button class="teamCardBtn" onclick="openTeamProfile('${team.id}')">Zobacz</button>
-            </div>
-          `;
-        });
+        return;
       }
 
-      teamsList.innerHTML = html;
+      teamsList.innerHTML = teams.map((team) => {
+        const playersCount = Array.isArray(team.players) ? team.players.length : 0;
+        return `
+          <div class="teamCard" onclick="openTeamProfile('${team.id}')">
+            ${createLogoHtml(team.logo, team.name)}
+            <div>
+              <div class="teamName">${team.name || "-"}</div>
+              <div class="teamPlayersCount">Graczy: ${playersCount}</div>
+            </div>
+            <button class="teamCardBtn">Zobacz</button>
+          </div>
+        `;
+      }).join("");
     }
 
     window.openTeamProfile = function(id) {
