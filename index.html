@@ -6,6 +6,7 @@
   <title>TopJoy League</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -15,148 +16,402 @@
         linear-gradient(180deg, #0b0f14 0%, #070a0f 100%);
       color: #fff;
     }
+
     a { text-decoration: none; color: inherit; }
+
     header {
-      position: sticky; top: 0; z-index: 50;
+      position: sticky;
+      top: 0;
+      z-index: 50;
       background: rgba(14, 19, 27, 0.95);
       border-bottom: 1px solid rgba(255,255,255,0.08);
       backdrop-filter: blur(10px);
     }
+
     .nav {
-      max-width: 1300px; margin: 0 auto; padding: 18px 24px;
-      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
-    .logoWrap { display: flex; align-items: center; gap: 14px; }
+
+    .logoWrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
     .logoIcon {
-      width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(135deg, #8c1717, #b66b2b);
-      box-shadow: 0 0 30px rgba(182, 107, 43, 0.25); font-size: 24px;
+      box-shadow: 0 0 30px rgba(182, 107, 43, 0.25);
+      font-size: 24px;
     }
-    .logoText h1 { margin: 0; font-size: 34px; font-weight: 900; letter-spacing: -1px; }
+
+    .logoText h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
     .logoText span {
-      display: block; margin-top: 6px; color: #d7a15d;
-      text-transform: uppercase; letter-spacing: 0.35em; font-size: 11px; font-weight: 700;
+      display: block;
+      margin-top: 6px;
+      color: #d7a15d;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 11px;
+      font-weight: 700;
     }
-    .navButtons { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .sectionBtn, .discordBtn, .mainBtn, .logoutBtn, .deleteBtn {
-      border: none; border-radius: 12px; cursor: pointer; font-weight: 800; transition: .2s ease;
+
+    .navButtons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
     }
+
+    .sectionBtn,
+    .discordBtn,
+    .mainBtn,
+    .logoutBtn,
+    .deleteBtn,
+    .editBtn,
+    .cancelBtn {
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
     .sectionBtn {
-      background: rgba(255,255,255,0.04); color: #efc089; border: 1px solid rgba(182,107,43,.25);
+      background: rgba(255,255,255,0.04);
+      color: #efc089;
+      border: 1px solid rgba(182, 107, 43, 0.25);
       padding: 13px 20px;
+      letter-spacing: 0.04em;
     }
-    .sectionBtn:hover, .discordBtn:hover, .mainBtn:hover, .logoutBtn:hover, .deleteBtn:hover {
-      transform: translateY(-2px); filter: brightness(1.06);
+
+    .sectionBtn:hover,
+    .discordBtn:hover,
+    .mainBtn:hover,
+    .logoutBtn:hover,
+    .deleteBtn:hover,
+    .editBtn:hover,
+    .cancelBtn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
     }
+
     .discordBtn {
+      position: relative;
       background: linear-gradient(135deg, #8c1717, #b66b2b);
-      color: #fff; padding: 13px 22px; position: relative; overflow: hidden;
-      box-shadow: 0 0 15px rgba(182,107,43,.25), 0 0 30px rgba(140,23,23,.15);
+      color: white;
+      padding: 13px 22px;
+      overflow: hidden;
+      box-shadow:
+        0 0 15px rgba(182, 107, 43, 0.25),
+        0 0 30px rgba(140, 23, 23, 0.15);
       animation: pulseGlow 2.6s infinite ease-in-out;
     }
+
     .discordBtn::before {
-      content: ""; position: absolute; top: 0; left: -120%; width: 120%; height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,.28), transparent);
-      transition: left .6s ease;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 120%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.28), transparent);
+      transition: left 0.6s ease;
     }
-    .discordBtn:hover::before { left: 130%; }
+
+    .discordBtn:hover::before {
+      left: 130%;
+    }
+
     @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(182,107,43,.18), 0 0 22px rgba(140,23,23,.1); }
-      50% { box-shadow: 0 0 22px rgba(182,107,43,.35), 0 0 42px rgba(140,23,23,.22); }
-      100% { box-shadow: 0 0 10px rgba(182,107,43,.18), 0 0 22px rgba(140,23,23,.1); }
+      0% {
+        box-shadow:
+          0 0 10px rgba(182, 107, 43, 0.18),
+          0 0 22px rgba(140, 23, 23, 0.1);
+      }
+      50% {
+        box-shadow:
+          0 0 22px rgba(182, 107, 43, 0.35),
+          0 0 42px rgba(140, 23, 23, 0.22);
+      }
+      100% {
+        box-shadow:
+          0 0 10px rgba(182, 107, 43, 0.18),
+          0 0 22px rgba(140, 23, 23, 0.1);
+      }
     }
 
     .page {
-      max-width: 1300px; margin: 26px auto; padding: 0 20px 40px;
-      display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 22px;
+      max-width: 1300px;
+      margin: 26px auto;
+      padding: 0 20px 40px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 22px;
     }
-    .hero, .matchesBox, .infoBox, .adminBox, .panel {
+
+    .hero,
+    .matchesBox,
+    .infoBox,
+    .adminBox,
+    .panel {
       background: rgba(18, 24, 33, 0.92);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.25);
     }
+
     .hero {
-      grid-column: 1 / -1; padding: 30px;
+      grid-column: 1 / -1;
+      padding: 30px;
       background:
         radial-gradient(circle at top right, rgba(182,107,43,0.12), transparent 30%),
         radial-gradient(circle at top left, rgba(140,23,23,0.16), transparent 35%),
         rgba(18, 24, 33, 0.96);
     }
+
     .heroTag {
-      display: inline-block; padding: 8px 12px; border-radius: 999px;
-      background: rgba(140, 23, 23, 0.18); color: #efc089;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(140, 23, 23, 0.18);
+      color: #efc089;
       border: 1px solid rgba(182, 107, 43, 0.25);
-      font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
     }
+
     .hero h2 {
-      margin: 18px 0 12px; font-size: 62px; line-height: .95; font-weight: 900; letter-spacing: -2px;
+      margin: 18px 0 12px;
+      font-size: 62px;
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -2px;
     }
+
     .hero h2 span { color: #d7a15d; }
+
     .hero p {
-      max-width: 760px; margin: 0; color: rgba(255,255,255,0.72); font-size: 18px; line-height: 1.6;
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255,255,255,0.72);
+      font-size: 18px;
+      line-height: 1.6;
     }
+
     .stats {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
     }
+
     .stat {
       background: rgba(8, 11, 16, 0.42);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px; padding: 18px;
+      border-radius: 16px;
+      padding: 18px;
     }
+
     .stat small {
-      display: block; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.18em;
-      font-size: 11px; font-weight: 700;
+      display: block;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 11px;
+      font-weight: 700;
     }
+
     .stat strong {
-      display: block; margin-top: 8px; font-size: 38px; color: #efc089; font-weight: 900;
+      display: block;
+      margin-top: 8px;
+      font-size: 38px;
+      color: #efc089;
+      font-weight: 900;
     }
-    .sectionTitle { margin: 0; padding: 22px 22px 10px; font-size: 30px; font-weight: 900; }
-    .sectionSub { padding: 0 22px 18px; color: rgba(255,255,255,0.5); font-size: 14px; }
-    .matchesList, .infoList, .adminInner { padding: 0 16px 16px; }
-    .infoItem {
-      margin: 10px 0; padding: 16px; border-radius: 14px; background: rgba(8, 11, 16, 0.48);
-      border: 1px solid rgba(255,255,255,0.06);
+
+    .sectionTitle {
+      margin: 0;
+      padding: 22px 22px 10px;
+      font-size: 30px;
+      font-weight: 900;
     }
-    .infoItem strong { display: block; font-size: 15px; margin-bottom: 6px; }
-    .infoItem span { color: rgba(255,255,255,0.58); font-size: 14px; line-height: 1.5; }
+
+    .sectionSub {
+      padding: 0 22px 18px;
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+    }
+
+    .matchesList,
+    .infoList,
+    .adminInner {
+      padding: 0 16px 16px;
+    }
 
     .match {
-      display: grid; grid-template-columns: 140px 1fr 170px;
-      gap: 16px; align-items: center; margin: 12px 0; padding: 18px;
-      border-radius: 16px; background: rgba(8, 11, 16, 0.48);
+      display: grid;
+      grid-template-columns: 140px 1fr 210px;
+      gap: 16px;
+      align-items: center;
+      margin: 12px 0;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(8, 11, 16, 0.48);
       border: 1px solid rgba(255,255,255,0.06);
     }
-    .matchDate { font-weight: 900; font-size: 24px; color: #efc089; }
-    .matchTeams { text-align: center; font-size: 18px; font-weight: 700; }
-    .matchTeams span { color: #d7a15d; margin: 0 8px; font-weight: 900; }
-    .adminControls { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
-    .matchTime { font-size: 26px; font-weight: 900; }
+
+    .matchDate {
+      font-weight: 900;
+      font-size: 24px;
+      color: #efc089;
+    }
+
+    .matchTeams {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .matchTeams span {
+      color: #d7a15d;
+      margin: 0 8px;
+      font-weight: 900;
+    }
+
+    .adminControls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .matchTime {
+      font-size: 26px;
+      font-weight: 900;
+    }
+
     .matchScore {
-      font-size: 18px; color: #efc089; font-weight: 900;
-      background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 10px;
+      font-size: 18px;
+      color: #efc089;
+      font-weight: 900;
+      background: rgba(255,255,255,0.04);
+      padding: 8px 12px;
+      border-radius: 10px;
+    }
+
+    .editBtn {
+      background: rgba(255,255,255,0.06);
+      color: #efc089;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 14px;
+      width: 100%;
+    }
+
+    .deleteBtn {
+      background: #341313;
+      color: #ff8b8b;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 14px;
+      width: 100%;
     }
 
     .adminInfo {
-      margin-bottom: 16px; padding: 14px 16px; border-radius: 14px;
-      background: rgba(8, 11, 16, 0.42); border: 1px solid rgba(182, 107, 43, 0.14);
-      color: rgba(255,255,255,0.72); line-height: 1.5;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(8, 11, 16, 0.42);
+      border: 1px solid rgba(182, 107, 43, 0.14);
+      color: rgba(255,255,255,0.72);
+      line-height: 1.5;
     }
+
     input, select {
-      width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08); background: rgba(8, 11, 16, 0.7);
-      color: #fff; outline: none; font-size: 15px;
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8, 11, 16, 0.7);
+      color: #fff;
+      outline: none;
+      font-size: 15px;
     }
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
     .mainBtn {
       background: linear-gradient(135deg, #8c1717, #b66b2b);
-      color: white; padding: 14px 16px; font-size: 14px; letter-spacing: .12em; width: 100%;
+      color: white;
+      padding: 14px 16px;
+      letter-spacing: 0.12em;
+      width: 100%;
     }
-    .logoutBtn, .deleteBtn {
-      background: #1c2430; color: white; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08);
+
+    .logoutBtn,
+    .cancelBtn {
+      background: #1c2430;
+      color: white;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      width: 100%;
+      margin-top: 10px;
     }
-    .success { color: #efc089; font-weight: 700; margin-bottom: 14px; }
-    .error { color: #ff7373; font-weight: 700; margin-bottom: 14px; }
+
+    .success {
+      color: #efc089;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .error {
+      color: #ff7373;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .infoItem {
+      margin: 10px 0;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(8, 11, 16, 0.48);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .infoItem strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .infoItem span {
+      color: rgba(255,255,255,0.58);
+      font-size: 14px;
+      line-height: 1.5;
+    }
 
     @media (max-width: 980px) {
       .page { grid-template-columns: 1fr; }
@@ -193,34 +448,59 @@
     <section class="hero">
       <div class="heroTag">Sezon 1 ligi</div>
       <h2>TOPJOY <span>LEAGUE</span></h2>
-      <p>Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze, a wszystko zapisuje się online i jest widoczne dla wszystkich.</p>
+      <p>
+        Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze,
+        edytować je po zakończeniu i przenosić je do Result.
+      </p>
+
       <div class="stats">
-        <div class="stat"><small>Drużyny</small><strong id="teamsCount">0</strong></div>
-        <div class="stat"><small>Mecze</small><strong id="matchesCount">0</strong></div>
-        <div class="stat"><small>Status</small><strong style="font-size:28px;">ONLINE</strong></div>
+        <div class="stat">
+          <small>Drużyny</small>
+          <strong id="teamsCount">0</strong>
+        </div>
+        <div class="stat">
+          <small>Mecze</small>
+          <strong id="matchesCount">0</strong>
+        </div>
+        <div class="stat">
+          <small>Status</small>
+          <strong style="font-size:28px;">ONLINE</strong>
+        </div>
       </div>
     </section>
 
     <section class="matchesBox">
       <h3 class="sectionTitle">Nadchodzące mecze</h3>
-      <div class="sectionSub">Tutaj automatycznie pojawiają się mecze dodane przez panel admina.</div>
+      <div class="sectionSub">Tutaj są tylko mecze, które nie zostały jeszcze zakończone.</div>
       <div id="matches" class="matchesList"></div>
     </section>
 
     <aside class="infoBox">
       <h3 class="sectionTitle">Informacje</h3>
       <div class="infoList">
-        <div class="infoItem"><strong>Dostęp admina</strong><span>Tylko osoba z hasłem może dodawać i usuwać mecze.</span></div>
-        <div class="infoItem"><strong>Kolory</strong><span>Całość jest ustawiona pod logo TopJoy: czerwień, złoto i ciemne tło.</span></div>
-        <div class="infoItem"><strong>Nawigacja</strong><span>U góry masz osobne zakładki: Drużyny, Result i Tabela.</span></div>
+        <div class="infoItem">
+          <strong>Edycja meczu</strong>
+          <span>Po zalogowaniu admina możesz kliknąć Edytuj, wpisać wynik i oznaczyć mecz jako zakończony.</span>
+        </div>
+        <div class="infoItem">
+          <strong>Result</strong>
+          <span>Po ustawieniu statusu finished mecz zniknie ze strony głównej i pokaże się w zakładce Result.</span>
+        </div>
+        <div class="infoItem">
+          <strong>Tabela</strong>
+          <span>W zakładce Tabela możesz ręcznie wpisywać punkty drużyn po zalogowaniu jako admin.</span>
+        </div>
       </div>
     </aside>
 
     <section class="adminBox">
       <h3 class="sectionTitle">Admin panel</h3>
-      <div class="sectionSub">Dodawanie i usuwanie meczów z poziomu strony.</div>
+      <div class="sectionSub">Dodawanie, edycja i usuwanie meczów.</div>
       <div class="adminInner">
-        <div class="adminInfo">Na tej stronie dodajesz mecze. Wyniki wpisane tutaj pokażą się też w zakładce Result.</div>
+        <div class="adminInfo">
+          Dodaj nowy mecz albo kliknij Edytuj przy istniejącym meczu. Gdy ustawisz status finished i wpiszesz wynik,
+          mecz przejdzie do zakładki Result.
+        </div>
 
         <div id="loginBox">
           <input id="pass" type="password" placeholder="Hasło admina">
@@ -249,7 +529,8 @@
             <option value="finished">Zakończony</option>
           </select>
 
-          <button class="mainBtn" onclick="addMatch()">Dodaj mecz</button>
+          <button class="mainBtn" id="matchActionBtn" onclick="saveMatch()">Dodaj mecz</button>
+          <button class="cancelBtn" id="cancelEditBtn" onclick="cancelEdit()" style="display:none;">Anuluj edycję</button>
           <button class="logoutBtn" onclick="logout()">Wyloguj</button>
         </div>
       </div>
@@ -259,16 +540,35 @@
       <h3 class="sectionTitle">Panel ligi</h3>
       <div class="sectionSub">Szybki podgląd statusu.</div>
       <div class="infoList">
-        <div class="infoItem"><strong>Admin</strong><span>Maniek</span></div>
-        <div class="infoItem"><strong>Tryb strony</strong><span>Esport / HLTV style</span></div>
-        <div class="infoItem"><strong>Zakładki</strong><span>Drużyny, Result i Tabela są oddzielone dla porządku.</span></div>
+        <div class="infoItem">
+          <strong>Admin</strong>
+          <span>Maniek</span>
+        </div>
+        <div class="infoItem">
+          <strong>Tryb strony</strong>
+          <span>Esport / HLTV style</span>
+        </div>
+        <div class="infoItem">
+          <strong>Zakładki</strong>
+          <span>Drużyny, Result i Tabela są oddzielone dla porządku.</span>
+        </div>
       </div>
     </aside>
   </main>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      deleteDoc,
+      doc,
+      updateDoc,
+      onSnapshot,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
@@ -285,6 +585,7 @@
 
     let password = "2312";
     let logged = false;
+    let editingMatchId = null;
     let matches = [];
     let teams = [];
 
@@ -293,20 +594,24 @@
       document.getElementById("teamsCount").innerText = teams.length;
     }
 
-    window.deleteMatch = async function(id) {
-      if (!logged) return;
-      if (!confirm("Na pewno usunąć ten mecz?")) return;
-      await deleteDoc(doc(db, "mecze", id));
-    };
-
     function renderMatches() {
       const box = document.getElementById("matches");
       let html = "";
 
-      if (matches.length === 0) {
-        html = `<div class="match"><div class="matchDate">Brak</div><div class="matchTeams">Nie dodano jeszcze żadnych meczów</div><div class="adminControls"><div class="matchTime">--:--</div></div></div>`;
+      const upcomingMatches = matches.filter(m => m.status !== "finished");
+
+      if (upcomingMatches.length === 0) {
+        html = `
+          <div class="match">
+            <div class="matchDate">Brak</div>
+            <div class="matchTeams">Nie dodano jeszcze żadnych nadchodzących meczów</div>
+            <div class="adminControls">
+              <div class="matchTime">--:--</div>
+            </div>
+          </div>
+        `;
       } else {
-        matches.forEach((m) => {
+        upcomingMatches.forEach((m) => {
           const score = (m.scoreA !== "" && m.scoreB !== "" && m.scoreA != null && m.scoreB != null)
             ? `<div class="matchScore">${m.scoreA}:${m.scoreB}</div>`
             : `<div class="matchTime">${m.time || "--:--"}</div>`;
@@ -317,6 +622,7 @@
               <div class="matchTeams">${m.teamA || "-"} <span>VS</span> ${m.teamB || "-"}</div>
               <div class="adminControls">
                 ${score}
+                ${logged ? `<button class="editBtn" onclick="editMatch('${m.id}')">Edytuj</button>` : ``}
                 ${logged ? `<button class="deleteBtn" onclick="deleteMatch('${m.id}')">Usuń</button>` : ``}
               </div>
             </div>
@@ -327,6 +633,43 @@
       box.innerHTML = html;
       updateStats();
     }
+
+    window.deleteMatch = async function(id) {
+      if (!logged) return;
+      if (!confirm("Na pewno usunąć ten mecz?")) return;
+      await deleteDoc(doc(db, "mecze", id));
+    };
+
+    window.editMatch = function(id) {
+      if (!logged) return;
+
+      const match = matches.find(m => m.id === id);
+      if (!match) return;
+
+      editingMatchId = id;
+
+      document.getElementById("teamA").value = match.teamA || "";
+      document.getElementById("teamB").value = match.teamB || "";
+      document.getElementById("date").value = match.date || "";
+      document.getElementById("time").value = match.time || "";
+      document.getElementById("scoreA").value = match.scoreA || "";
+      document.getElementById("scoreB").value = match.scoreB || "";
+      document.getElementById("status").value = match.status || "upcoming";
+
+      document.getElementById("matchActionBtn").innerText = "Zapisz zmiany meczu";
+      document.getElementById("cancelEditBtn").style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    };
+
+    window.cancelEdit = function() {
+      editingMatchId = null;
+      ["teamA", "teamB", "date", "time", "scoreA", "scoreB"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      document.getElementById("status").value = "upcoming";
+      document.getElementById("matchActionBtn").innerText = "Dodaj mecz";
+      document.getElementById("cancelEditBtn").style.display = "none";
+    };
 
     window.login = function() {
       const p = document.getElementById("pass").value;
@@ -344,13 +687,16 @@
 
     window.logout = function() {
       logged = false;
+      editingMatchId = null;
       document.getElementById("admin").style.display = "none";
       document.getElementById("loginBox").style.display = "block";
       document.getElementById("pass").value = "";
+      document.getElementById("cancelEditBtn").style.display = "none";
+      document.getElementById("matchActionBtn").innerText = "Dodaj mecz";
       renderMatches();
     };
 
-    window.addMatch = async function() {
+    window.saveMatch = async function() {
       if (!logged) return;
 
       const teamA = document.getElementById("teamA").value.trim();
@@ -366,14 +712,18 @@
         return;
       }
 
-      await addDoc(collection(db, "mecze"), {
-        teamA, teamB, date, time, scoreA, scoreB, status, createdAt: Date.now()
-      });
+      const data = { teamA, teamB, date, time, scoreA, scoreB, status };
 
-      ["teamA", "teamB", "date", "time", "scoreA", "scoreB"].forEach(id => {
-        document.getElementById(id).value = "";
-      });
-      document.getElementById("status").value = "upcoming";
+      if (editingMatchId) {
+        await updateDoc(doc(db, "mecze", editingMatchId), data);
+      } else {
+        await addDoc(collection(db, "mecze"), {
+          ...data,
+          createdAt: Date.now()
+        });
+      }
+
+      cancelEdit();
     };
 
     onSnapshot(query(collection(db, "mecze"), orderBy("createdAt", "desc")), (snapshot) => {
