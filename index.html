@@ -44,16 +44,14 @@
       gap: 14px;
     }
 
-    .logoIcon {
-      width: 52px;
-      height: 52px;
+    .siteLogo {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
       border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
-      box-shadow: 0 0 30px rgba(182, 107, 43, 0.25);
-      font-size: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 24px rgba(140, 23, 23, 0.35);
+      background: #10151c;
     }
 
     .logoText h1 {
@@ -428,7 +426,7 @@
   <header>
     <div class="nav">
       <div class="logoWrap">
-        <div class="logoIcon">🔥</div>
+        <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
           <h1>TopJoy League</h1>
           <span>Counter-Strike 2</span>
@@ -454,18 +452,9 @@
       </p>
 
       <div class="stats">
-        <div class="stat">
-          <small>Drużyny</small>
-          <strong id="teamsCount">0</strong>
-        </div>
-        <div class="stat">
-          <small>Mecze</small>
-          <strong id="matchesCount">0</strong>
-        </div>
-        <div class="stat">
-          <small>Status</small>
-          <strong style="font-size:28px;">ONLINE</strong>
-        </div>
+        <div class="stat"><small>Drużyny</small><strong id="teamsCount">0</strong></div>
+        <div class="stat"><small>Mecze</small><strong id="matchesCount">0</strong></div>
+        <div class="stat"><small>Status</small><strong style="font-size:28px;">ONLINE</strong></div>
       </div>
     </section>
 
@@ -478,18 +467,9 @@
     <aside class="infoBox">
       <h3 class="sectionTitle">Informacje</h3>
       <div class="infoList">
-        <div class="infoItem">
-          <strong>Edycja meczu</strong>
-          <span>Po zalogowaniu admina możesz kliknąć Edytuj, wpisać wynik i oznaczyć mecz jako zakończony.</span>
-        </div>
-        <div class="infoItem">
-          <strong>Result</strong>
-          <span>Po ustawieniu statusu finished mecz zniknie ze strony głównej i pokaże się w zakładce Result.</span>
-        </div>
-        <div class="infoItem">
-          <strong>Tabela</strong>
-          <span>W zakładce Tabela możesz ręcznie wpisywać punkty drużyn po zalogowaniu jako admin.</span>
-        </div>
+        <div class="infoItem"><strong>Edycja meczu</strong><span>Po zalogowaniu admina możesz kliknąć Edytuj, wpisać wynik i oznaczyć mecz jako zakończony.</span></div>
+        <div class="infoItem"><strong>Result</strong><span>Po ustawieniu statusu finished mecz zniknie ze strony głównej i pokaże się w zakładce Result.</span></div>
+        <div class="infoItem"><strong>Tabela</strong><span>W zakładce Tabela możesz ręcznie wpisywać punkty drużyn po zalogowaniu jako admin.</span></div>
       </div>
     </aside>
 
@@ -540,18 +520,9 @@
       <h3 class="sectionTitle">Panel ligi</h3>
       <div class="sectionSub">Szybki podgląd statusu.</div>
       <div class="infoList">
-        <div class="infoItem">
-          <strong>Admin</strong>
-          <span>Maniek</span>
-        </div>
-        <div class="infoItem">
-          <strong>Tryb strony</strong>
-          <span>Esport / HLTV style</span>
-        </div>
-        <div class="infoItem">
-          <strong>Zakładki</strong>
-          <span>Drużyny, Result i Tabela są oddzielone dla porządku.</span>
-        </div>
+        <div class="infoItem"><strong>Admin</strong><span>Maniek</span></div>
+        <div class="infoItem"><strong>Tryb strony</strong><span>Esport / HLTV style</span></div>
+        <div class="infoItem"><strong>Zakładki</strong><span>Drużyny, Result i Tabela są oddzielone dla porządku.</span></div>
       </div>
     </aside>
   </main>
@@ -597,7 +568,6 @@
     function renderMatches() {
       const box = document.getElementById("matches");
       let html = "";
-
       const upcomingMatches = matches.filter(m => m.status !== "finished");
 
       if (upcomingMatches.length === 0) {
@@ -605,9 +575,7 @@
           <div class="match">
             <div class="matchDate">Brak</div>
             <div class="matchTeams">Nie dodano jeszcze żadnych nadchodzących meczów</div>
-            <div class="adminControls">
-              <div class="matchTime">--:--</div>
-            </div>
+            <div class="adminControls"><div class="matchTime">--:--</div></div>
           </div>
         `;
       } else {
@@ -642,12 +610,10 @@
 
     window.editMatch = function(id) {
       if (!logged) return;
-
       const match = matches.find(m => m.id === id);
       if (!match) return;
 
       editingMatchId = id;
-
       document.getElementById("teamA").value = match.teamA || "";
       document.getElementById("teamB").value = match.teamB || "";
       document.getElementById("date").value = match.date || "";
@@ -655,7 +621,6 @@
       document.getElementById("scoreA").value = match.scoreA || "";
       document.getElementById("scoreB").value = match.scoreB || "";
       document.getElementById("status").value = match.status || "upcoming";
-
       document.getElementById("matchActionBtn").innerText = "Zapisz zmiany meczu";
       document.getElementById("cancelEditBtn").style.display = "block";
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
@@ -717,10 +682,7 @@
       if (editingMatchId) {
         await updateDoc(doc(db, "mecze", editingMatchId), data);
       } else {
-        await addDoc(collection(db, "mecze"), {
-          ...data,
-          createdAt: Date.now()
-        });
+        await addDoc(collection(db, "mecze"), { ...data, createdAt: Date.now() });
       }
 
       cancelEdit();
