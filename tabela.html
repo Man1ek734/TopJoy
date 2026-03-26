@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Drużyny - TopJoy League</title>
+  <title>Tabela - TopJoy League</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -81,11 +81,7 @@
     .sectionBtn,
     .discordBtn,
     .mainBtn,
-    .logoutBtn,
-    .deleteBtn,
-    .teamCardBtn,
-    .steamBtn,
-    .backBtn {
+    .saveBtn {
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -104,11 +100,7 @@
     .sectionBtn:hover,
     .discordBtn:hover,
     .mainBtn:hover,
-    .logoutBtn:hover,
-    .deleteBtn:hover,
-    .teamCardBtn:hover,
-    .steamBtn:hover,
-    .backBtn:hover {
+    .saveBtn:hover {
       transform: translateY(-2px);
       filter: brightness(1.06);
     }
@@ -149,11 +141,12 @@
       margin: 26px auto;
       padding: 0 20px 40px;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
       gap: 22px;
     }
 
-    .hero, .teamsBox, .teamProfileBox, .adminBox {
+    .hero,
+    .loginBox,
+    .tableBox {
       background: rgba(18, 24, 33, 0.92);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
@@ -161,7 +154,6 @@
     }
 
     .hero {
-      grid-column: 1 / -1;
       padding: 30px;
       background:
         radial-gradient(circle at top right, rgba(182,107,43,0.12), transparent 30%),
@@ -185,7 +177,6 @@
     .hero h2 {
       margin: 18px 0 12px;
       font-size: 56px;
-      line-height: 0.95;
       font-weight: 900;
       letter-spacing: -2px;
     }
@@ -193,11 +184,10 @@
     .hero h2 span { color: #d7a15d; }
 
     .hero p {
-      max-width: 760px;
-      margin: 0;
       color: rgba(255,255,255,0.72);
       font-size: 18px;
       line-height: 1.6;
+      margin: 0;
     }
 
     .sectionTitle {
@@ -213,185 +203,155 @@
       font-size: 14px;
     }
 
-    .teamsList, .teamProfileInner, .adminInner {
+    .loginInner,
+    .tableInner {
       padding: 0 16px 16px;
     }
 
-    .teamCard {
-      display: grid;
-      grid-template-columns: 90px 1fr 140px;
-      gap: 16px;
-      align-items: center;
-      margin: 12px 0;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(8,11,16,0.48);
-      border: 1px solid rgba(255,255,255,0.06);
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .teamCard:hover {
-      transform: translateY(-2px);
-      border-color: rgba(182,107,43,0.35);
-      box-shadow: 0 0 20px rgba(182,107,43,0.12);
-    }
-
-    .teamLogo {
-      width: 78px;
-      height: 78px;
-      border-radius: 16px;
-      object-fit: cover;
-      background: #10151c;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .teamLogoFallback {
-      width: 78px;
-      height: 78px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #10151c;
-      border: 1px solid rgba(255,255,255,0.08);
-      color: #efc089;
-      font-size: 28px;
-      font-weight: 900;
-    }
-
-    .teamName {
-      font-size: 24px;
-      font-weight: 900;
-    }
-
-    .teamPlayersCount {
-      margin-top: 6px;
-      color: rgba(255,255,255,0.55);
-      font-size: 14px;
-    }
-
-    .teamCardBtn,
-    .mainBtn {
+    .mainBtn,
+    .saveBtn {
       background: linear-gradient(135deg, #8c1717, #b66b2b);
       color: #fff;
-      padding: 12px 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .steamBtn,
-    .logoutBtn,
-    .deleteBtn,
-    .backBtn {
-      background: #1c2430;
-      color: #efc089;
       padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      width: 100%;
-    }
-
-    .teamProfileHeader {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(8,11,16,0.48);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .teamProfileLogo {
-      width: 100px;
-      height: 100px;
-      border-radius: 18px;
-      object-fit: cover;
-      background: #10151c;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .teamProfileName {
-      font-size: 34px;
-      font-weight: 900;
-    }
-
-    .teamProfileSub {
-      margin-top: 8px;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .playersList {
-      display: grid;
-      gap: 12px;
-    }
-
-    .playerRow {
-      display: grid;
-      grid-template-columns: 1fr 140px;
-      gap: 12px;
-      align-items: center;
-      padding: 16px;
-      border-radius: 14px;
-      background: rgba(8,11,16,0.48);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .playerNick {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .adminInfo {
-      margin-bottom: 16px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(8,11,16,0.42);
-      border: 1px solid rgba(182,107,43,0.14);
-      color: rgba(255,255,255,0.72);
-      line-height: 1.5;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 12px;
+      padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(8,11,16,0.7);
       color: #fff;
       outline: none;
       font-size: 15px;
+      margin-bottom: 10px;
     }
 
-    .grid2 {
+    .error { color: #ff7373; font-weight: 700; margin-top: 10px; }
+    .ok { color: #efc089; font-weight: 700; margin-top: 10px; }
+
+    .tableRow {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: 90px 78px 1fr 130px 260px;
+      gap: 14px;
+      align-items: center;
+      margin: 12px 0;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(34, 43, 58, 0.95), rgba(28, 36, 49, 0.95));
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
-    .success {
+    .place {
+      font-size: 28px;
+      font-weight: 900;
+      color: #d7a15d;
+      letter-spacing: -1px;
+    }
+
+    .teamLogo {
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #10151c;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .teamLogoFallback {
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #10151c;
+      border: 1px solid rgba(255,255,255,0.08);
       color: #efc089;
-      font-weight: 700;
-      margin-bottom: 14px;
+      font-size: 24px;
+      font-weight: 900;
     }
 
-    .error {
-      color: #ff7373;
-      font-weight: 700;
-      margin-bottom: 14px;
+    .teamBlock {
+      min-width: 0;
     }
 
-    .hidden { display: none !important; }
+    .teamName {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .teamPlayers {
+      margin-top: 6px;
+      color: rgba(255,255,255,0.55);
+      font-size: 14px;
+      line-height: 1.4;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .points {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 900;
+      color: #efc089;
+    }
+
+    .adminPts {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .adminPts input {
+      margin-bottom: 0;
+      width: 110px;
+      text-align: center;
+    }
+
+    .notLogged {
+      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .emptyRow {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(8,11,16,0.48);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.65);
+      font-weight: 700;
+    }
+
+    @media (max-width: 1100px) {
+      .tableRow {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .adminPts {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .notLogged {
+        text-align: center;
+      }
+
+      .teamLogo,
+      .teamLogoFallback {
+        margin: 0 auto;
+      }
+    }
 
     @media (max-width: 980px) {
-      .page { grid-template-columns: 1fr; }
-      .hero h2 { font-size: 42px; }
       .nav { flex-direction: column; align-items: flex-start; }
-      .teamCard, .playerRow, .teamProfileHeader { grid-template-columns: 1fr; text-align: center; }
-      .grid2 { grid-template-columns: 1fr; }
-      .teamLogo, .teamLogoFallback, .teamProfileLogo { margin: 0 auto; }
+      .hero h2 { font-size: 42px; }
     }
   </style>
 </head>
@@ -408,8 +368,8 @@
 
       <div class="navButtons">
         <a href="index.html"><button class="sectionBtn">Home</button></a>
+        <a href="druzyny.html"><button class="sectionBtn">Drużyny</button></a>
         <a href="result.html"><button class="sectionBtn">Result</button></a>
-        <a href="tabela.html"><button class="sectionBtn">Tabela</button></a>
         <a href="https://discord.gg/BKbxhe7cyB" target="_blank"><button class="discordBtn">Discord</button></a>
       </div>
     </div>
@@ -417,73 +377,28 @@
 
   <main class="page">
     <section class="hero">
-      <div class="heroTag">Zakładka drużyn</div>
-      <h2>TOPJOY <span>DRUŻYNY</span></h2>
+      <div class="heroTag">Tabela ligi</div>
+      <h2>TOPJOY <span>TABELA</span></h2>
       <p>
-        Tutaj dodajesz drużyny, logo, nicki graczy i linki do Steam. Po kliknięciu całej drużyny
-        otwiera się jej profil.
+        Ranking drużyn w stylu esportowym. Po lewej miejsce, obok logo i nazwa drużyny,
+        niżej nicki graczy, a po prawej punkty. Po zalogowaniu możesz je edytować.
       </p>
     </section>
 
-    <section class="teamsBox" id="teamsSection">
-      <h3 class="sectionTitle">Drużyny</h3>
-      <div class="sectionSub">Kliknij gdziekolwiek na drużynie, aby zobaczyć skład i linki do Steam.</div>
-      <div id="teamsList" class="teamsList"></div>
-    </section>
-
-    <section class="teamProfileBox hidden" id="teamProfileBox">
-      <h3 class="sectionTitle">Profil drużyny</h3>
-      <div class="teamProfileInner">
-        <button class="backBtn" onclick="closeTeamProfile()">Wróć do drużyn</button>
-        <div id="teamProfileContent"></div>
+    <section class="loginBox">
+      <h3 class="sectionTitle">Logowanie admina</h3>
+      <div class="sectionSub">Zaloguj się, jeśli chcesz zmieniać punkty drużyn.</div>
+      <div class="loginInner">
+        <input id="pass" type="password" placeholder="Hasło admina">
+        <button class="mainBtn" onclick="login()">Zaloguj</button>
+        <div id="msg"></div>
       </div>
     </section>
 
-    <section class="adminBox">
-      <h3 class="sectionTitle">Panel drużyn</h3>
-      <div class="sectionSub">Dodawanie i usuwanie drużyn z poziomu strony.</div>
-      <div class="adminInner">
-        <div class="adminInfo">
-          Logujesz się na stronie, dodajesz drużynę i od razu widzą ją wszyscy.
-        </div>
-
-        <div id="loginBox">
-          <input id="pass" type="password" placeholder="Hasło admina">
-          <div id="loginMsg"></div>
-          <button class="mainBtn" onclick="login()">Zaloguj jako admin</button>
-        </div>
-
-        <div id="admin" style="display:none;">
-          <div class="success">Zalogowano jako admin.</div>
-
-          <input id="teamNameInput" placeholder="Nazwa drużyny">
-          <input id="teamLogoInput" placeholder="Link do logo drużyny">
-
-          <div class="grid2">
-            <input id="player1Nick" placeholder="Gracz 1 nick">
-            <input id="player1Steam" placeholder="Gracz 1 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player2Nick" placeholder="Gracz 2 nick">
-            <input id="player2Steam" placeholder="Gracz 2 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player3Nick" placeholder="Gracz 3 nick">
-            <input id="player3Steam" placeholder="Gracz 3 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player4Nick" placeholder="Gracz 4 nick">
-            <input id="player4Steam" placeholder="Gracz 4 link Steam">
-          </div>
-          <div class="grid2">
-            <input id="player5Nick" placeholder="Gracz 5 nick">
-            <input id="player5Steam" placeholder="Gracz 5 link Steam">
-          </div>
-
-          <button class="mainBtn" onclick="addTeam()">Dodaj drużynę</button>
-          <button class="logoutBtn" onclick="logout()">Wyloguj</button>
-        </div>
-      </div>
+    <section class="tableBox">
+      <h3 class="sectionTitle">Tabela ligi</h3>
+      <div class="sectionSub">Drużyny sortowane od największej liczby punktów.</div>
+      <div id="tableInner" class="tableInner"></div>
     </section>
   </main>
 
@@ -492,12 +407,11 @@
     import {
       getFirestore,
       collection,
-      addDoc,
-      deleteDoc,
-      doc,
       onSnapshot,
       query,
-      orderBy
+      orderBy,
+      doc,
+      updateDoc
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -513,160 +427,86 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let password = "2312";
+    const password = "2312";
     let logged = false;
     let teams = [];
 
-    function createLogoHtml(logo, name, className = "teamLogo") {
+    function createLogoHtml(logo, name) {
       if (logo) {
-        return `<img src="${logo}" alt="${name}" class="${className}" onerror="this.outerHTML='<div class=&quot;teamLogoFallback&quot;>${(name || "T").charAt(0).toUpperCase()}</div>'">`;
+        return `<img src="${logo}" alt="${name}" class="teamLogo" onerror="this.outerHTML='<div class=&quot;teamLogoFallback&quot;>${(name || "T").charAt(0).toUpperCase()}</div>'">`;
       }
       return `<div class="teamLogoFallback">${(name || "T").charAt(0).toUpperCase()}</div>`;
     }
 
-    function renderTeams() {
-      const teamsList = document.getElementById("teamsList");
-      let html = "";
-
-      if (teams.length === 0) {
-        html = `
-          <div class="teamCard">
-            <div class="teamLogoFallback">T</div>
-            <div>
-              <div class="teamName">Brak drużyn</div>
-              <div class="teamPlayersCount">Nie dodano jeszcze żadnej drużyny</div>
-            </div>
-            <div></div>
-          </div>
-        `;
-      } else {
-        teams.forEach((team) => {
-          const playersCount = Array.isArray(team.players) ? team.players.length : 0;
-          html += `
-            <div class="teamCard" onclick="openTeamProfile('${team.id}')">
-              ${createLogoHtml(team.logo, team.name)}
-              <div>
-                <div class="teamName">${team.name || "-"}</div>
-                <div class="teamPlayersCount">Graczy: ${playersCount}</div>
-              </div>
-              <button class="teamCardBtn">Zobacz</button>
-            </div>
-          `;
-        });
+    function playersText(team) {
+      if (!Array.isArray(team.players) || team.players.length === 0) {
+        return "Brak zapisanych graczy";
       }
-
-      teamsList.innerHTML = html;
+      return team.players.map(player => player.nick || "-").join(" • ");
     }
-
-    window.openTeamProfile = function(id) {
-      const team = teams.find(t => t.id === id);
-      if (!team) return;
-
-      const players = Array.isArray(team.players) ? team.players : [];
-
-      document.getElementById("teamProfileContent").innerHTML = `
-        <div class="teamProfileHeader">
-          ${createLogoHtml(team.logo, team.name, "teamProfileLogo")}
-          <div>
-            <div class="teamProfileName">${team.name || "-"}</div>
-            <div class="teamProfileSub">Skład drużyny i profile Steam</div>
-            ${logged ? `<button class="deleteBtn" style="margin-top:12px;" onclick="deleteTeam('${team.id}')">Usuń drużynę</button>` : ``}
-          </div>
-        </div>
-        <div class="playersList">
-          ${
-            players.length === 0
-              ? `<div class="playerRow"><div class="playerNick">Brak graczy</div><div></div></div>`
-              : players.map(player => `
-                <div class="playerRow">
-                  <div class="playerNick">${player.nick || "-"}</div>
-                  ${
-                    player.steam
-                      ? `<a href="${player.steam}" target="_blank"><button class="steamBtn">Steam</button></a>`
-                      : `<button class="steamBtn" disabled style="opacity:.5;cursor:not-allowed;">Brak linku</button>`
-                  }
-                </div>
-              `).join("")
-          }
-        </div>
-      `;
-
-      document.getElementById("teamProfileBox").classList.remove("hidden");
-      document.getElementById("teamsSection").classList.add("hidden");
-    };
-
-    window.closeTeamProfile = function() {
-      document.getElementById("teamProfileBox").classList.add("hidden");
-      document.getElementById("teamsSection").classList.remove("hidden");
-    };
-
-    window.deleteTeam = async function(id) {
-      if (!logged) return;
-      if (!confirm("Na pewno usunąć tę drużynę?")) return;
-      await deleteDoc(doc(db, "druzyny", id));
-      closeTeamProfile();
-    };
 
     window.login = function() {
       const p = document.getElementById("pass").value;
-      const msg = document.getElementById("loginMsg");
+      const msg = document.getElementById("msg");
 
       if (p === password) {
         logged = true;
-        document.getElementById("admin").style.display = "block";
-        document.getElementById("loginBox").style.display = "none";
-        msg.innerHTML = "";
-        renderTeams();
+        msg.innerHTML = '<div class="ok">Zalogowano jako admin.</div>';
+        render();
       } else {
         msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
       }
     };
 
-    window.logout = function() {
-      logged = false;
-      document.getElementById("admin").style.display = "none";
-      document.getElementById("loginBox").style.display = "block";
-      document.getElementById("pass").value = "";
-      renderTeams();
-    };
-
-    window.addTeam = async function() {
+    window.savePoints = async function(teamId) {
       if (!logged) return;
 
-      const name = document.getElementById("teamNameInput").value.trim();
-      const logo = document.getElementById("teamLogoInput").value.trim();
+      const input = document.getElementById(`pts-${teamId}`);
+      const value = Number(input.value);
 
-      if (!name) {
-        alert("Podaj nazwę drużyny.");
+      if (Number.isNaN(value)) {
+        alert("Podaj liczbę.");
         return;
       }
 
-      const players = [];
-      for (let i = 1; i <= 5; i++) {
-        const nick = document.getElementById(`player${i}Nick`).value.trim();
-        const steam = document.getElementById(`player${i}Steam`).value.trim();
-        if (nick) players.push({ nick, steam });
-      }
-
-      await addDoc(collection(db, "druzyny"), {
-        name,
-        logo,
-        players,
-        points: 0,
-        createdAt: Date.now()
-      });
-
-      document.getElementById("teamNameInput").value = "";
-      document.getElementById("teamLogoInput").value = "";
-      for (let i = 1; i <= 5; i++) {
-        document.getElementById(`player${i}Nick`).value = "";
-        document.getElementById(`player${i}Steam`).value = "";
-      }
+      await updateDoc(doc(db, "druzyny", teamId), { points: value });
     };
+
+    function render() {
+      const box = document.getElementById("tableInner");
+      const sorted = [...teams].sort((a, b) => (b.points || 0) - (a.points || 0));
+
+      if (sorted.length === 0) {
+        box.innerHTML = `<div class="emptyRow">Brak drużyn w tabeli.</div>`;
+        return;
+      }
+
+      box.innerHTML = sorted.map((team, index) => `
+        <div class="tableRow">
+          <div class="place">#${index + 1}</div>
+          <div>${createLogoHtml(team.logo, team.name)}</div>
+          <div class="teamBlock">
+            <div class="teamName">${team.name || "-"}</div>
+            <div class="teamPlayers">${playersText(team)}</div>
+          </div>
+          <div class="points">${team.points || 0}</div>
+          <div>
+            ${
+              logged
+                ? `<div class="adminPts">
+                    <input id="pts-${team.id}" type="number" value="${team.points || 0}" placeholder="Punkty">
+                    <button class="saveBtn" onclick="savePoints('${team.id}')">Zapisz</button>
+                  </div>`
+                : `<div class="notLogged">Zaloguj admina, aby edytować</div>`
+            }
+          </div>
+        </div>
+      `).join("");
+    }
 
     onSnapshot(query(collection(db, "druzyny"), orderBy("createdAt", "desc")), (snapshot) => {
       teams = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-      renderTeams();
+      render();
     });
   </script>
 </body>
