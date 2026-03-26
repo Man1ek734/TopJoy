@@ -44,16 +44,14 @@
       gap: 14px;
     }
 
-    .logoIcon {
-      width: 52px;
-      height: 52px;
+    .siteLogo {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
       border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
-      box-shadow: 0 0 30px rgba(182, 107, 43, 0.25);
-      font-size: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 24px rgba(140, 23, 23, 0.35);
+      background: #10151c;
     }
 
     .logoText h1 {
@@ -83,7 +81,6 @@
     .sectionBtn,
     .discordBtn,
     .mainBtn,
-    .saveBtn,
     .deleteBtn,
     .editBtn,
     .cancelBtn {
@@ -105,7 +102,6 @@
     .sectionBtn:hover,
     .discordBtn:hover,
     .mainBtn:hover,
-    .saveBtn:hover,
     .deleteBtn:hover,
     .editBtn:hover,
     .cancelBtn:hover {
@@ -136,26 +132,12 @@
       transition: left 0.6s ease;
     }
 
-    .discordBtn:hover::before {
-      left: 130%;
-    }
+    .discordBtn:hover::before { left: 130%; }
 
     @keyframes pulseGlow {
-      0% {
-        box-shadow:
-          0 0 10px rgba(182, 107, 43, 0.18),
-          0 0 22px rgba(140, 23, 23, 0.1);
-      }
-      50% {
-        box-shadow:
-          0 0 22px rgba(182, 107, 43, 0.35),
-          0 0 42px rgba(140, 23, 23, 0.22);
-      }
-      100% {
-        box-shadow:
-          0 0 10px rgba(182, 107, 43, 0.18),
-          0 0 22px rgba(140, 23, 23, 0.1);
-      }
+      0% { box-shadow: 0 0 10px rgba(182,107,43,0.18), 0 0 22px rgba(140,23,23,0.1); }
+      50% { box-shadow: 0 0 22px rgba(182,107,43,0.35), 0 0 42px rgba(140,23,23,0.22); }
+      100% { box-shadow: 0 0 10px rgba(182,107,43,0.18), 0 0 22px rgba(140,23,23,0.1); }
     }
 
     .page {
@@ -237,15 +219,18 @@
     }
 
     .resultCard {
-      display: grid;
-      grid-template-columns: 1fr 180px 1fr 170px;
-      gap: 14px;
-      align-items: center;
       margin: 12px 0;
       padding: 18px;
       border-radius: 16px;
       background: rgba(8, 11, 16, 0.48);
       border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .resultTop {
+      display: grid;
+      grid-template-columns: 1fr 180px 1fr 170px;
+      gap: 14px;
+      align-items: center;
     }
 
     .teamLeft {
@@ -329,8 +314,7 @@
       gap: 12px;
     }
 
-    .mainBtn,
-    .saveBtn {
+    .mainBtn {
       background: linear-gradient(135deg, #8c1717, #b66b2b);
       color: white;
       padding: 14px 16px;
@@ -383,16 +367,9 @@
       .page { grid-template-columns: 1fr; }
       .hero h2 { font-size: 42px; }
       .nav { flex-direction: column; align-items: flex-start; }
-      .resultCard {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .teamLeft, .teamRight, .meta {
-        text-align: center;
-      }
-      .resultAdmin {
-        justify-content: center;
-      }
+      .resultTop { grid-template-columns: 1fr; text-align: center; }
+      .teamLeft, .teamRight, .meta { text-align: center; }
+      .resultAdmin { justify-content: center; }
       .grid2 { grid-template-columns: 1fr; }
     }
   </style>
@@ -401,7 +378,7 @@
   <header>
     <div class="nav">
       <div class="logoWrap">
-        <div class="logoIcon">🔥</div>
+        <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
           <h1>TopJoy League</h1>
           <span>Counter-Strike 2</span>
@@ -475,18 +452,9 @@
     <aside class="infoBox">
       <h3 class="sectionTitle">Informacje</h3>
       <div class="infoList">
-        <div class="infoItem">
-          <strong>Edycja</strong>
-          <span>W Result możesz poprawiać wynik rozegranego meczu.</span>
-        </div>
-        <div class="infoItem">
-          <strong>Usuwanie</strong>
-          <span>Każdy rozegrany mecz można usunąć z bazy po zalogowaniu jako admin.</span>
-        </div>
-        <div class="infoItem">
-          <strong>Status</strong>
-          <span>Jeśli ustawisz status upcoming, mecz wróci z Result na stronę główną.</span>
-        </div>
+        <div class="infoItem"><strong>Edycja</strong><span>W Result możesz poprawiać wynik rozegranego meczu.</span></div>
+        <div class="infoItem"><strong>Usuwanie</strong><span>Każdy rozegrany mecz można usunąć z bazy po zalogowaniu jako admin.</span></div>
+        <div class="infoItem"><strong>Status</strong><span>Jeśli ustawisz status upcoming, mecz wróci z Result na stronę główną.</span></div>
       </div>
     </aside>
   </main>
@@ -528,10 +496,12 @@
       if (finished.length === 0) {
         box.innerHTML = `
           <div class="resultCard">
-            <div class="teamLeft">Brak</div>
-            <div class="score">--:--</div>
-            <div class="teamRight">Brak wyników</div>
-            <div class="meta">---</div>
+            <div class="resultTop">
+              <div class="teamLeft">Brak</div>
+              <div class="score">--:--</div>
+              <div class="teamRight">Brak wyników</div>
+              <div class="meta">---</div>
+            </div>
           </div>
         `;
         return;
@@ -539,12 +509,14 @@
 
       box.innerHTML = finished.map(m => `
         <div class="resultCard">
-          <div class="teamLeft">${m.teamA || "-"}</div>
-          <div class="score">${m.scoreA || 0}:${m.scoreB || 0}</div>
-          <div class="teamRight">${m.teamB || "-"}</div>
-          <div class="meta">${m.date || "-"}<br>${m.time || "--:--"}</div>
+          <div class="resultTop">
+            <div class="teamLeft">${m.teamA || "-"}</div>
+            <div class="score">${m.scoreA || 0}:${m.scoreB || 0}</div>
+            <div class="teamRight">${m.teamB || "-"}</div>
+            <div class="meta">${m.date || "-"}<br>${m.time || "--:--"}</div>
+          </div>
           ${logged ? `
-            <div class="resultAdmin" style="grid-column: 1 / -1;">
+            <div class="resultAdmin">
               <button class="editBtn" onclick="editMatch('${m.id}')">Edytuj</button>
               <button class="deleteBtn" onclick="removeMatch('${m.id}')">Usuń</button>
             </div>
@@ -579,7 +551,6 @@
       if (!m) return;
 
       editingId = id;
-
       document.getElementById("teamA").value = m.teamA || "";
       document.getElementById("teamB").value = m.teamB || "";
       document.getElementById("date").value = m.date || "";
@@ -604,7 +575,6 @@
         status: document.getElementById("status").value
       });
 
-      editingId = null;
       cancelEdit();
     };
 
