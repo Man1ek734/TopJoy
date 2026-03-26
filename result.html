@@ -2,381 +2,370 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Result - TopJoy League</title>
   <style>
     * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+    :root{
+      --bg:#0b1016;
+      --bg2:#111823;
+      --panel:#17212d;
+      --panel2:#1d2936;
+      --line:#2a3948;
+      --soft:#8b98a9;
+      --text:#f2f5f8;
+      --orange:#ff8a1f;
+      --orange2:#ffb347;
+      --red:#c73a2b;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(140, 23, 23, 0.28), transparent 30%),
-        radial-gradient(circle at top right, rgba(182, 107, 43, 0.18), transparent 25%),
-        linear-gradient(180deg, #0b0f14 0%, #070a0f 100%);
-      color: #fff;
+        radial-gradient(circle at top left, rgba(199,58,43,.14), transparent 24%),
+        linear-gradient(180deg, #0b1016 0%, #0d141d 100%);
+      color:var(--text);
     }
 
-    a { text-decoration: none; color: inherit; }
+    a{ text-decoration:none; color:inherit; }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(14, 19, 27, 0.95);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(11,16,22,.96);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(8px);
     }
 
-    .nav {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    .topbar{
+      max-width:1400px;
+      margin:0 auto;
+      height:82px;
+      padding:0 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
     }
 
-    .logoWrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: 0.2s ease;
+    .logoWrap{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      cursor:pointer;
+      text-decoration:none;
+      transition:.18s ease;
     }
 
-    .logoWrap:hover { transform: scale(1.03); }
+    .logoWrap:hover{ transform:translateY(-1px); }
 
-    .siteLogo {
-      width: 72px;
-      height: 72px;
-      object-fit: cover;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 0 24px rgba(140, 23, 23, 0.35);
-      background: #10151c;
+    .siteLogo{
+      width:62px;
+      height:62px;
+      object-fit:cover;
+      border-radius:12px;
+      border:1px solid #2c3c4d;
+      box-shadow:0 0 18px rgba(199,58,43,.22);
+      background:#0f151c;
     }
 
-    .logoText h1 {
-      margin: 0;
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: -1px;
+    .logoText h1{
+      margin:0;
+      font-size:28px;
+      font-weight:900;
+      line-height:1;
+      letter-spacing:-.5px;
     }
 
-    .logoText span {
-      display: block;
-      margin-top: 6px;
-      color: #d7a15d;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      font-size: 11px;
-      font-weight: 700;
+    .logoText span{
+      display:block;
+      margin-top:7px;
+      color:var(--orange2);
+      text-transform:uppercase;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.34em;
     }
 
-    .navButtons {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
+    .navButtons{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .sectionBtn,
-    .discordBtn,
-    .mainBtn,
-    .deleteBtn,
-    .editBtn,
-    .cancelBtn {
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 800;
-      transition: 0.2s ease;
+    .tabBtn, .discordBtn, .mainBtn, .subBtn, .dangerBtn{
+      border:none;
+      cursor:pointer;
+      transition:.18s ease;
+      font-weight:800;
+      border-radius:10px;
     }
 
-    .sectionBtn {
-      background: rgba(255,255,255,0.04);
-      color: #efc089;
-      border: 1px solid rgba(182, 107, 43, 0.25);
-      padding: 13px 20px;
-      letter-spacing: 0.04em;
+    .tabBtn{
+      background:linear-gradient(180deg, #1a2430, #121b24);
+      color:#f1c27d;
+      border:1px solid #304152;
+      padding:11px 18px;
+      min-width:92px;
     }
 
-    .sectionBtn:hover,
+    .tabBtn.active{
+      background:linear-gradient(180deg, #2a3746, #1a242f);
+      border-color:#4d6478;
+    }
+
+    .tabBtn:hover,
     .discordBtn:hover,
     .mainBtn:hover,
-    .deleteBtn:hover,
-    .editBtn:hover,
-    .cancelBtn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.06);
+    .subBtn:hover,
+    .dangerBtn:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.04);
     }
 
-    .discordBtn {
-      position: relative;
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
-      color: white;
-      padding: 13px 22px;
-      overflow: hidden;
-      box-shadow:
-        0 0 15px rgba(182, 107, 43, 0.25),
-        0 0 30px rgba(140, 23, 23, 0.15);
-      animation: pulseGlow 2.6s infinite ease-in-out;
+    .discordBtn{
+      background:linear-gradient(135deg, var(--red), var(--orange));
+      color:white;
+      padding:12px 19px;
+      box-shadow:0 0 20px rgba(199,58,43,.18);
     }
 
-    .discordBtn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -120%;
-      width: 120%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.28), transparent);
-      transition: left 0.6s ease;
+    .page{
+      max-width:1400px;
+      margin:20px auto 34px;
+      padding:0 20px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
     }
 
-    .discordBtn:hover::before { left: 130%; }
-
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(182,107,43,0.18), 0 0 22px rgba(140,23,23,0.1); }
-      50% { box-shadow: 0 0 22px rgba(182,107,43,0.35), 0 0 42px rgba(140,23,23,0.22); }
-      100% { box-shadow: 0 0 10px rgba(182,107,43,0.18), 0 0 22px rgba(140,23,23,0.1); }
+    .panel{
+      background:linear-gradient(180deg, rgba(23,33,45,.98), rgba(18,27,36,.98));
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:0 10px 28px rgba(0,0,0,.24);
     }
 
-    .page {
-      max-width: 1300px;
-      margin: 26px auto;
-      padding: 0 20px 40px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
-    }
-
-    .hero, .resultsBox, .adminBox, .infoBox {
-      background: rgba(18, 24, 33, 0.92);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
-    }
-
-    .hero {
-      grid-column: 1 / -1;
-      padding: 30px;
+    .hero{
+      grid-column:1/-1;
+      padding:20px;
       background:
-        radial-gradient(circle at top right, rgba(182,107,43,0.12), transparent 30%),
-        radial-gradient(circle at top left, rgba(140,23,23,0.16), transparent 35%),
-        rgba(18, 24, 33, 0.96);
+        radial-gradient(circle at left top, rgba(199,58,43,.16), transparent 20%),
+        radial-gradient(circle at right top, rgba(255,138,31,.10), transparent 16%),
+        linear-gradient(180deg, #16202b 0%, #131b25 100%);
     }
 
-    .heroTag {
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(140, 23, 23, 0.18);
-      color: #efc089;
-      border: 1px solid rgba(182, 107, 43, 0.25);
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
+    .heroTag{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      background:rgba(255,138,31,.08);
+      border:1px solid rgba(255,179,71,.22);
+      color:#ffcf8c;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      border-radius:999px;
+      padding:8px 12px;
+      margin-bottom:16px;
     }
 
-    .hero h2 {
-      margin: 18px 0 12px;
-      font-size: 56px;
-      line-height: 0.95;
-      font-weight: 900;
-      letter-spacing: -2px;
+    .hero h2{
+      margin:0 0 12px;
+      font-size:54px;
+      line-height:.95;
+      letter-spacing:-2px;
+      font-weight:900;
     }
 
-    .hero h2 span { color: #d7a15d; }
+    .hero h2 span{ color:var(--orange2); }
 
-    .hero p {
-      max-width: 760px;
-      margin: 0;
-      color: rgba(255,255,255,0.72);
-      font-size: 18px;
-      line-height: 1.6;
+    .hero p{
+      margin:0;
+      color:#c6cfdb;
+      font-size:19px;
+      line-height:1.55;
+      max-width:860px;
     }
 
-    .sectionTitle {
-      margin: 0;
-      padding: 22px 22px 10px;
-      font-size: 30px;
-      font-weight: 900;
+    .sectionHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 18px 8px;
+      border-bottom:1px solid rgba(255,255,255,.04);
     }
 
-    .sectionSub {
-      padding: 0 22px 18px;
-      color: rgba(255,255,255,0.5);
-      font-size: 14px;
+    .sectionHead h3{
+      margin:0;
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:-.5px;
     }
 
-    .resultsList, .adminInner, .infoList {
-      padding: 0 16px 16px;
+    .sectionHead span{
+      color:#8d99a9;
+      font-size:13px;
     }
 
-    .resultCard {
-      margin: 12px 0;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(8, 11, 16, 0.48);
-      border: 1px solid rgba(255,255,255,0.06);
+    .panelBody{ padding:16px; }
+
+    .resultCard{
+      background:linear-gradient(180deg, #1f2b38, #18222d);
+      border:1px solid #2c3b49;
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:12px;
     }
 
-    .resultTop {
-      display: grid;
-      grid-template-columns: 1fr 180px 1fr 170px;
-      gap: 14px;
-      align-items: center;
+    .resultTop{
+      display:grid;
+      grid-template-columns:1fr 180px 1fr 170px;
+      gap:14px;
+      align-items:center;
     }
 
-    .teamLeft {
-      text-align: right;
-      font-size: 20px;
-      font-weight: 800;
-      color: #fff;
+    .teamLeft{
+      text-align:right;
+      font-size:22px;
+      font-weight:900;
     }
 
-    .teamRight {
-      text-align: left;
-      font-size: 20px;
-      font-weight: 800;
-      color: #fff;
+    .teamRight{
+      text-align:left;
+      font-size:22px;
+      font-weight:900;
     }
 
-    .score {
-      text-align: center;
-      font-size: 30px;
-      font-weight: 900;
-      color: #efc089;
-      background: rgba(255,255,255,0.04);
-      padding: 14px;
-      border-radius: 12px;
+    .score{
+      text-align:center;
+      font-size:32px;
+      font-weight:900;
+      color:#ffd093;
+      background:#111922;
+      border:1px solid #2d3d4c;
+      padding:13px;
+      border-radius:12px;
     }
 
-    .meta {
-      text-align: right;
-      color: rgba(255,255,255,0.65);
-      font-size: 14px;
-      line-height: 1.5;
+    .meta{
+      text-align:right;
+      color:#b7c1cc;
+      font-size:14px;
+      line-height:1.55;
     }
 
-    .resultAdmin {
-      margin-top: 12px;
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
+    .resultAdmin{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+      margin-top:12px;
     }
 
-    .editBtn {
-      background: rgba(255,255,255,0.06);
-      color: #efc089;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 14px;
+    .mainBtn{
+      width:100%;
+      padding:13px 16px;
+      background:linear-gradient(135deg, var(--red), var(--orange));
+      color:white;
+      letter-spacing:.12em;
     }
 
-    .deleteBtn {
-      background: #341313;
-      color: #ff8b8b;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 14px;
+    .subBtn{
+      width:100%;
+      padding:11px 14px;
+      background:#243241;
+      color:#ffe0b5;
+      border:1px solid #334556;
     }
 
-    .adminInfo {
-      margin-bottom: 16px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(8, 11, 16, 0.42);
-      border: 1px solid rgba(182, 107, 43, 0.14);
-      color: rgba(255,255,255,0.72);
-      line-height: 1.5;
+    .dangerBtn{
+      width:100%;
+      padding:11px 14px;
+      background:#421a1a;
+      color:#ff9d9d;
+      border:1px solid #643131;
     }
 
-    input, select {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(8, 11, 16, 0.7);
-      color: #fff;
-      outline: none;
-      font-size: 15px;
+    .adminInfo{
+      padding:14px;
+      margin-bottom:14px;
+      border-radius:12px;
+      background:#121920;
+      border:1px solid #263340;
+      color:#b8c2ce;
+      line-height:1.55;
     }
 
-    .grid2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    input, select{
+      width:100%;
+      padding:13px 14px;
+      border-radius:10px;
+      border:1px solid #314252;
+      background:#111922;
+      color:#fff;
+      outline:none;
+      font-size:14px;
+      margin-bottom:12px;
     }
 
-    .mainBtn {
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
-      color: white;
-      padding: 14px 16px;
-      letter-spacing: 0.12em;
-      width: 100%;
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
     }
 
-    .cancelBtn {
-      background: #1c2430;
-      color: white;
-      padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      width: 100%;
-      margin-top: 10px;
+    .error{ color:#ff8e8e; font-weight:800; margin-bottom:12px; }
+    .success{ color:#ffc77d; font-weight:800; margin-bottom:12px; }
+
+    .infoCard{
+      background:linear-gradient(180deg, #1f2b38, #18222d);
+      border:1px solid #2c3b49;
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:12px;
     }
 
-    .error {
-      color: #ff7373;
-      font-weight: 700;
-      margin-bottom: 14px;
+    .infoCard strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:16px;
     }
 
-    .success {
-      color: #efc089;
-      font-weight: 700;
-      margin-bottom: 14px;
+    .infoCard span{
+      color:#b4becb;
+      font-size:14px;
+      line-height:1.55;
     }
 
-    .infoItem {
-      margin: 10px 0;
-      padding: 16px;
-      border-radius: 14px;
-      background: rgba(8, 11, 16, 0.48);
-      border: 1px solid rgba(255,255,255,0.06);
+    @media (max-width:1100px){
+      .page{ grid-template-columns:1fr; }
     }
 
-    .infoItem strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
+    @media (max-width:760px){
+      .topbar{
+        height:auto;
+        padding:14px 16px;
+        flex-direction:column;
+        align-items:flex-start;
+      }
 
-    .infoItem span {
-      color: rgba(255,255,255,0.58);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 980px) {
-      .page { grid-template-columns: 1fr; }
-      .hero h2 { font-size: 42px; }
-      .nav { flex-direction: column; align-items: flex-start; }
-      .resultTop { grid-template-columns: 1fr; text-align: center; }
-      .teamLeft, .teamRight, .meta { text-align: center; }
-      .resultAdmin { justify-content: center; }
-      .grid2 { grid-template-columns: 1fr; }
+      .hero h2{ font-size:42px; }
+      .resultTop{ grid-template-columns:1fr; text-align:center; }
+      .teamLeft, .teamRight, .meta{ text-align:center; }
+      .resultAdmin{ justify-content:center; }
+      .grid2{ grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="nav">
+    <div class="topbar">
       <a href="index.html" class="logoWrap">
         <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
@@ -386,32 +375,36 @@
       </a>
 
       <div class="navButtons">
-        <a href="index.html"><button class="sectionBtn">Home</button></a>
-        <a href="druzyny.html"><button class="sectionBtn">Drużyny</button></a>
-        <a href="tabela.html"><button class="sectionBtn">Tabela</button></a>
+        <a href="druzyny.html"><button class="tabBtn">Drużyny</button></a>
+        <a href="result.html"><button class="tabBtn active">Result</button></a>
+        <a href="tabela.html"><button class="tabBtn">Tabela</button></a>
         <a href="https://discord.gg/BKbxhe7cyB" target="_blank"><button class="discordBtn">Discord</button></a>
       </div>
     </div>
   </header>
 
   <main class="page">
-    <section class="hero">
+    <section class="panel hero">
       <div class="heroTag">Wyniki meczów</div>
       <h2>TOPJOY <span>RESULT</span></h2>
-      <p>Tutaj trafiają wszystkie rozegrane mecze. Po zalogowaniu możesz je edytować, poprawiać wynik, usuwać albo cofnąć z powrotem do nadchodzących.</p>
+      <p>Tutaj trafiają wszystkie zakończone mecze. Po zalogowaniu możesz edytować wynik, usunąć mecz albo cofnąć go do nadchodzących.</p>
     </section>
 
-    <section class="resultsBox">
-      <h3 class="sectionTitle">Result</h3>
-      <div class="sectionSub">Wszystkie zakończone mecze z możliwością edycji dla admina.</div>
-      <div id="results" class="resultsList"></div>
+    <section class="panel">
+      <div class="sectionHead">
+        <h3>Rozegrane mecze</h3>
+        <span>Tylko finished</span>
+      </div>
+      <div id="results" class="panelBody"></div>
     </section>
 
-    <aside class="adminBox">
-      <h3 class="sectionTitle">Panel edycji</h3>
-      <div class="sectionSub">Tu edytujesz rozegrane mecze.</div>
-      <div class="adminInner">
-        <div class="adminInfo">Kliknij Edytuj przy meczu, a tutaj wczyta się formularz. Możesz zmienić wynik albo status meczu.</div>
+    <aside class="panel">
+      <div class="sectionHead">
+        <h3>Panel edycji</h3>
+        <span>Admin</span>
+      </div>
+      <div class="panelBody">
+        <div class="adminInfo">Kliknij Edytuj przy meczu, a formularz na dole się uzupełni.</div>
 
         <div id="loginBox">
           <input id="pass" placeholder="Hasło admina">
@@ -421,6 +414,7 @@
 
         <div id="admin" style="display:none;">
           <div class="success">Zalogowano jako admin.</div>
+
           <input id="teamA" placeholder="Drużyna A">
           <input id="teamB" placeholder="Drużyna B">
 
@@ -440,17 +434,29 @@
           </select>
 
           <button class="mainBtn" onclick="saveMatch()">Zapisz zmiany</button>
-          <button class="cancelBtn" onclick="cancelEdit()">Anuluj</button>
+          <button class="subBtn" onclick="cancelEdit()" style="margin-top:10px;">Anuluj</button>
         </div>
       </div>
     </aside>
 
-    <aside class="infoBox">
-      <h3 class="sectionTitle">Informacje</h3>
-      <div class="infoList">
-        <div class="infoItem"><strong>Edycja</strong><span>W Result możesz poprawiać wynik rozegranego meczu.</span></div>
-        <div class="infoItem"><strong>Usuwanie</strong><span>Każdy rozegrany mecz można usunąć z bazy po zalogowaniu jako admin.</span></div>
-        <div class="infoItem"><strong>Status</strong><span>Jeśli ustawisz status upcoming, mecz wróci z Result na stronę główną.</span></div>
+    <aside class="panel" style="grid-column:2;">
+      <div class="sectionHead">
+        <h3>Informacje</h3>
+        <span>Status</span>
+      </div>
+      <div class="panelBody">
+        <div class="infoCard">
+          <strong>Edycja</strong>
+          <span>W Result możesz poprawiać wynik rozegranego meczu.</span>
+        </div>
+        <div class="infoCard">
+          <strong>Usuwanie</strong>
+          <span>Każdy rozegrany mecz można usunąć z bazy po zalogowaniu jako admin.</span>
+        </div>
+        <div class="infoCard">
+          <strong>Cofnięcie meczu</strong>
+          <span>Po ustawieniu statusu upcoming mecz wróci na stronę główną.</span>
+        </div>
       </div>
     </aside>
   </main>
@@ -504,8 +510,8 @@
           </div>
           ${logged ? `
             <div class="resultAdmin">
-              <button class="editBtn" onclick="editMatch('${m.id}')">Edytuj</button>
-              <button class="deleteBtn" onclick="removeMatch('${m.id}')">Usuń</button>
+              <button class="subBtn" onclick="editMatch('${m.id}')">Edytuj</button>
+              <button class="dangerBtn" onclick="removeMatch('${m.id}')">Usuń</button>
             </div>
           ` : ``}
         </div>
@@ -545,7 +551,6 @@
       document.getElementById("scoreA").value = m.scoreA || "";
       document.getElementById("scoreB").value = m.scoreB || "";
       document.getElementById("status").value = m.status || "finished";
-
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     };
 
