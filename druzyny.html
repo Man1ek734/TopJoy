@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Drużyny - TopJoy League</title>
   <style>
     * { box-sizing: border-box; }
@@ -44,19 +44,15 @@
       gap: 14px;
     }
 
-    .logoIcon {
-      width: 52px;
-      height: 52px;
+    .siteLogo {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
       border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #8c1717, #b66b2b);
-      box-shadow: 0 0 30px rgba(182, 107, 43, 0.25);
-      font-size: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 24px rgba(140, 23, 23, 0.35);
+      background: #10151c;
     }
-
-    .logoText { line-height: 1; }
 
     .logoText h1 {
       margin: 0;
@@ -79,28 +75,40 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .sectionBtn,
+    .discordBtn,
+    .mainBtn,
+    .logoutBtn,
+    .deleteBtn,
+    .teamCardBtn,
+    .steamBtn,
+    .backBtn {
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.2s ease;
     }
 
     .sectionBtn {
       background: rgba(255,255,255,0.04);
       color: #efc089;
-      border: 1px solid rgba(182, 107, 43, 0.25);
+      border: 1px solid rgba(182,107,43,0.25);
       padding: 13px 20px;
-      border-radius: 14px;
-      font-weight: 800;
       letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: 0.25s ease;
     }
 
     .sectionBtn:hover,
     .discordBtn:hover,
     .mainBtn:hover,
     .logoutBtn:hover,
-    .steamBtn:hover,
+    .deleteBtn:hover,
     .teamCardBtn:hover,
-    .backBtn:hover,
-    .deleteBtn:hover {
+    .steamBtn:hover,
+    .backBtn:hover {
       transform: translateY(-2px);
       filter: brightness(1.06);
     }
@@ -109,17 +117,11 @@
       position: relative;
       background: linear-gradient(135deg, #8c1717, #b66b2b);
       color: white;
-      border: none;
       padding: 13px 22px;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      cursor: pointer;
       overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
       box-shadow:
-        0 0 15px rgba(182, 107, 43, 0.25),
-        0 0 30px rgba(140, 23, 23, 0.15);
+        0 0 15px rgba(182,107,43,0.25),
+        0 0 30px rgba(140,23,23,0.15);
       animation: pulseGlow 2.6s infinite ease-in-out;
     }
 
@@ -134,26 +136,12 @@
       transition: left 0.6s ease;
     }
 
-    .discordBtn:hover::before {
-      left: 130%;
-    }
+    .discordBtn:hover::before { left: 130%; }
 
     @keyframes pulseGlow {
-      0% {
-        box-shadow:
-          0 0 10px rgba(182, 107, 43, 0.18),
-          0 0 22px rgba(140, 23, 23, 0.1);
-      }
-      50% {
-        box-shadow:
-          0 0 22px rgba(182, 107, 43, 0.35),
-          0 0 42px rgba(140, 23, 23, 0.22);
-      }
-      100% {
-        box-shadow:
-          0 0 10px rgba(182, 107, 43, 0.18),
-          0 0 22px rgba(140, 23, 23, 0.1);
-      }
+      0% { box-shadow: 0 0 10px rgba(182,107,43,0.18), 0 0 22px rgba(140,23,23,0.1); }
+      50% { box-shadow: 0 0 22px rgba(182,107,43,0.35), 0 0 42px rgba(140,23,23,0.22); }
+      100% { box-shadow: 0 0 10px rgba(182,107,43,0.18), 0 0 22px rgba(140,23,23,0.1); }
     }
 
     .page {
@@ -165,10 +153,7 @@
       gap: 22px;
     }
 
-    .hero,
-    .teamsBox,
-    .teamProfileBox,
-    .adminBox {
+    .hero, .teamsBox, .teamProfileBox, .adminBox {
       background: rgba(18, 24, 33, 0.92);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
@@ -190,7 +175,7 @@
       border-radius: 999px;
       background: rgba(140, 23, 23, 0.18);
       color: #efc089;
-      border: 1px solid rgba(182, 107, 43, 0.25);
+      border: 1px solid rgba(182,107,43,0.25);
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -228,9 +213,7 @@
       font-size: 14px;
     }
 
-    .teamsList,
-    .teamProfileInner,
-    .adminInner {
+    .teamsList, .teamProfileInner, .adminInner {
       padding: 0 16px 16px;
     }
 
@@ -242,7 +225,7 @@
       margin: 12px 0;
       padding: 18px;
       border-radius: 16px;
-      background: rgba(8, 11, 16, 0.48);
+      background: rgba(8,11,16,0.48);
       border: 1px solid rgba(255,255,255,0.06);
     }
 
@@ -272,26 +255,12 @@
     .teamName {
       font-size: 24px;
       font-weight: 900;
-      color: #fff;
     }
 
     .teamPlayersCount {
       margin-top: 6px;
       color: rgba(255,255,255,0.55);
       font-size: 14px;
-    }
-
-    .teamCardBtn,
-    .steamBtn,
-    .deleteBtn,
-    .mainBtn,
-    .logoutBtn,
-    .backBtn {
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 800;
-      transition: 0.2s ease;
     }
 
     .teamCardBtn,
@@ -303,24 +272,15 @@
       letter-spacing: 0.08em;
     }
 
-    .steamBtn {
-      background: #1f2b3a;
+    .steamBtn,
+    .logoutBtn,
+    .deleteBtn,
+    .backBtn {
+      background: #1c2430;
       color: #efc089;
       padding: 12px 14px;
       border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
       width: 100%;
-    }
-
-    .deleteBtn,
-    .logoutBtn,
-    .backBtn {
-      background: #1c2430;
-      color: white;
-      padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      width: 100%;
-      margin-top: 10px;
     }
 
     .teamProfileHeader {
@@ -331,7 +291,7 @@
       margin-bottom: 20px;
       padding: 18px;
       border-radius: 16px;
-      background: rgba(8, 11, 16, 0.48);
+      background: rgba(8,11,16,0.48);
       border: 1px solid rgba(255,255,255,0.06);
     }
 
@@ -347,7 +307,6 @@
     .teamProfileName {
       font-size: 34px;
       font-weight: 900;
-      color: #fff;
     }
 
     .teamProfileSub {
@@ -367,7 +326,7 @@
       align-items: center;
       padding: 16px;
       border-radius: 14px;
-      background: rgba(8, 11, 16, 0.48);
+      background: rgba(8,11,16,0.48);
       border: 1px solid rgba(255,255,255,0.06);
     }
 
@@ -380,25 +339,23 @@
       margin-bottom: 16px;
       padding: 14px 16px;
       border-radius: 14px;
-      background: rgba(8, 11, 16, 0.42);
-      border: 1px solid rgba(182, 107, 43, 0.14);
+      background: rgba(8,11,16,0.42);
+      border: 1px solid rgba(182,107,43,0.14);
       color: rgba(255,255,255,0.72);
       line-height: 1.5;
     }
 
     input {
       width: 100%;
-      padding: 14px 14px;
+      padding: 14px;
       margin-bottom: 12px;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(8, 11, 16, 0.7);
+      background: rgba(8,11,16,0.7);
       color: #fff;
       outline: none;
       font-size: 15px;
     }
-
-    input::placeholder { color: rgba(255,255,255,0.35); }
 
     .grid2 {
       display: grid;
@@ -423,30 +380,10 @@
     @media (max-width: 980px) {
       .page { grid-template-columns: 1fr; }
       .hero h2 { font-size: 42px; }
-      .teamCard,
-      .playerRow,
-      .teamProfileHeader {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .navButtons {
-        width: 100%;
-        flex-wrap: wrap;
-      }
-
+      .nav { flex-direction: column; align-items: flex-start; }
+      .teamCard, .playerRow, .teamProfileHeader { grid-template-columns: 1fr; text-align: center; }
       .grid2 { grid-template-columns: 1fr; }
-
-      .teamLogo,
-      .teamLogoFallback,
-      .teamProfileLogo {
-        margin: 0 auto;
-      }
+      .teamLogo, .teamLogoFallback, .teamProfileLogo { margin: 0 auto; }
     }
   </style>
 </head>
@@ -454,7 +391,7 @@
   <header>
     <div class="nav">
       <div class="logoWrap">
-        <div class="logoIcon">🔥</div>
+        <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
           <h1>TopJoy League</h1>
           <span>Counter-Strike 2</span>
@@ -462,13 +399,10 @@
       </div>
 
       <div class="navButtons">
-        <a href="index.html">
-          <button class="sectionBtn">Strona główna</button>
-        </a>
-
-        <a href="https://discord.gg/BKbxhe7cyB" target="_blank">
-          <button class="discordBtn">Discord</button>
-        </a>
+        <a href="index.html"><button class="sectionBtn">Home</button></a>
+        <a href="result.html"><button class="sectionBtn">Result</button></a>
+        <a href="tabela.html"><button class="sectionBtn">Tabela</button></a>
+        <a href="https://discord.gg/BKbxhe7cyB" target="_blank"><button class="discordBtn">Discord</button></a>
       </div>
     </div>
   </header>
@@ -478,8 +412,7 @@
       <div class="heroTag">Zakładka drużyn</div>
       <h2>TOPJOY <span>DRUŻYNY</span></h2>
       <p>
-        Tutaj dodajesz drużyny, logo, nicki graczy i linki do Steam. Po kliknięciu drużyny
-        otwiera się jej profil z całym składem.
+        Tutaj dodajesz drużyny, logo, nicki graczy i linki do Steam. Po kliknięciu drużyny otwiera się jej profil.
       </p>
     </section>
 
@@ -584,8 +517,6 @@
 
     function renderTeams() {
       const teamsList = document.getElementById("teamsList");
-      if (!teamsList) return;
-
       let html = "";
 
       if (teams.length === 0) {
@@ -622,13 +553,9 @@
       const team = teams.find(t => t.id === id);
       if (!team) return;
 
-      const box = document.getElementById("teamProfileBox");
-      const content = document.getElementById("teamProfileContent");
-      const teamsSection = document.getElementById("teamsSection");
-
       const players = Array.isArray(team.players) ? team.players : [];
 
-      content.innerHTML = `
+      document.getElementById("teamProfileContent").innerHTML = `
         <div class="teamProfileHeader">
           ${createLogoHtml(team.logo, team.name, "teamProfileLogo")}
           <div>
@@ -655,8 +582,8 @@
         </div>
       `;
 
-      box.classList.remove("hidden");
-      teamsSection.classList.add("hidden");
+      document.getElementById("teamProfileBox").classList.remove("hidden");
+      document.getElementById("teamsSection").classList.add("hidden");
     };
 
     window.closeTeamProfile = function() {
@@ -666,8 +593,7 @@
 
     window.deleteTeam = async function(id) {
       if (!logged) return;
-      const ok = confirm("Na pewno usunąć tę drużynę?");
-      if (!ok) return;
+      if (!confirm("Na pewno usunąć tę drużynę?")) return;
       await deleteDoc(doc(db, "druzyny", id));
       closeTeamProfile();
     };
@@ -680,10 +606,10 @@
         logged = true;
         document.getElementById("admin").style.display = "block";
         document.getElementById("loginBox").style.display = "none";
-        if (msg) msg.innerHTML = "";
+        msg.innerHTML = "";
         renderTeams();
       } else {
-        if (msg) msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
+        msg.innerHTML = '<div class="error">Złe hasło admina.</div>';
       }
     };
 
@@ -710,15 +636,14 @@
       for (let i = 1; i <= 5; i++) {
         const nick = document.getElementById(`player${i}Nick`).value.trim();
         const steam = document.getElementById(`player${i}Steam`).value.trim();
-        if (nick) {
-          players.push({ nick, steam });
-        }
+        if (nick) players.push({ nick, steam });
       }
 
       await addDoc(collection(db, "druzyny"), {
         name,
         logo,
         players,
+        points: 0,
         createdAt: Date.now()
       });
 
@@ -730,12 +655,8 @@
       }
     };
 
-    const teamsQuery = query(collection(db, "druzyny"), orderBy("createdAt", "desc"));
-    onSnapshot(teamsQuery, (snapshot) => {
-      teams = snapshot.docs.map((docSnap) => ({
-        id: docSnap.id,
-        ...docSnap.data()
-      }));
+    onSnapshot(query(collection(db, "druzyny"), orderBy("createdAt", "desc")), (snapshot) => {
+      teams = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
       renderTeams();
     });
   </script>
