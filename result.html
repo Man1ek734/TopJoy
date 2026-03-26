@@ -2,162 +2,200 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Result - TopJoy League</title>
+
   <style>
-    * { box-sizing: border-box; }
     body {
-      margin: 0; font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(140, 23, 23, 0.28), transparent 30%),
-        radial-gradient(circle at top right, rgba(182, 107, 43, 0.18), transparent 25%),
-        linear-gradient(180deg, #0b0f14 0%, #070a0f 100%);
-      color: #fff;
+      margin: 0;
+      font-family: Arial;
+      background: #0b0f14;
+      color: white;
     }
-    a { text-decoration: none; color: inherit; }
-    header {
-      position: sticky; top: 0; z-index: 50; background: rgba(14, 19, 27, 0.95);
-      border-bottom: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px);
-    }
+
     .nav {
-      max-width: 1300px; margin: 0 auto; padding: 18px 24px;
-      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background: #111;
     }
-    .logoWrap { display: flex; align-items: center; gap: 14px; }
-    .logoIcon {
-      width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, #8c1717, #b66b2b); box-shadow: 0 0 30px rgba(182,107,43,.25); font-size: 24px;
+
+    .btn {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
     }
-    .logoText h1 { margin: 0; font-size: 34px; font-weight: 900; letter-spacing: -1px; }
-    .logoText span {
-      display: block; margin-top: 6px; color: #d7a15d; text-transform: uppercase;
-      letter-spacing: 0.35em; font-size: 11px; font-weight: 700;
+
+    .main { background: orange; }
+    .danger { background: red; color: white; }
+    .edit { background: #444; color: white; }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
     }
-    .navButtons { display: flex; gap: 14px; flex-wrap: wrap; }
-    .sectionBtn, .discordBtn {
-      border: none; border-radius: 12px; cursor: pointer; font-weight: 800; transition: .2s ease;
-      padding: 13px 20px;
+
+    .match {
+      background: #111827;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 10px 0;
     }
-    .sectionBtn { background: rgba(255,255,255,.04); color: #efc089; border: 1px solid rgba(182,107,43,.25); }
-    .discordBtn {
-      background: linear-gradient(135deg, #8c1717, #b66b2b); color: white;
-      box-shadow: 0 0 15px rgba(182,107,43,.25), 0 0 30px rgba(140,23,23,.15);
-    }
-    .sectionBtn:hover, .discordBtn:hover { transform: translateY(-2px); filter: brightness(1.06); }
-    .page { max-width: 1300px; margin: 26px auto; padding: 0 20px 40px; }
-    .hero, .resultsBox {
-      background: rgba(18, 24, 33, 0.92);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
-    }
-    .hero { padding: 30px; margin-bottom: 22px; }
-    .heroTag {
-      display: inline-block; padding: 8px 12px; border-radius: 999px;
-      background: rgba(140, 23, 23, 0.18); color: #efc089; border: 1px solid rgba(182,107,43,.25);
-      font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .18em;
-    }
-    .hero h2 { margin: 18px 0 12px; font-size: 56px; font-weight: 900; }
-    .hero h2 span { color: #d7a15d; }
-    .hero p { color: rgba(255,255,255,.72); font-size: 18px; line-height: 1.6; margin: 0; }
-    .sectionTitle { margin: 0; padding: 22px 22px 10px; font-size: 30px; font-weight: 900; }
-    .sectionSub { padding: 0 22px 18px; color: rgba(255,255,255,.5); font-size: 14px; }
-    .resultsList { padding: 0 16px 16px; }
-    .resultCard {
-      display: grid; grid-template-columns: 1fr 150px 1fr 130px;
-      gap: 14px; align-items: center; margin: 12px 0; padding: 18px;
-      border-radius: 16px; background: rgba(8,11,16,.48); border: 1px solid rgba(255,255,255,.06);
-    }
-    .teamLeft { text-align: right; font-size: 20px; font-weight: 800; }
-    .teamRight { text-align: left; font-size: 20px; font-weight: 800; }
-    .score {
-      text-align: center; font-size: 28px; font-weight: 900; color: #efc089;
-      background: rgba(255,255,255,.04); padding: 12px; border-radius: 12px;
-    }
-    .meta { text-align: right; color: rgba(255,255,255,.6); font-size: 14px; }
-    @media (max-width: 980px) {
-      .nav { flex-direction: column; align-items: flex-start; }
-      .resultCard { grid-template-columns: 1fr; text-align: center; }
-      .teamLeft, .teamRight, .meta { text-align: center; }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <div class="nav">
-      <div class="logoWrap">
-        <div class="logoIcon">🔥</div>
-        <div class="logoText">
-          <h1>TopJoy League</h1>
-          <span>Counter-Strike 2</span>
-        </div>
-      </div>
-      <div class="navButtons">
-        <a href="index.html"><button class="sectionBtn">Strona główna</button></a>
-        <a href="druzyny.html"><button class="sectionBtn">Drużyny</button></a>
-        <a href="tabela.html"><button class="sectionBtn">Tabela</button></a>
-        <a href="https://discord.gg/BKbxhe7cyB" target="_blank"><button class="discordBtn">Discord</button></a>
-      </div>
+
+<div class="nav">
+  <div>🔥 TopJoy League</div>
+  <div>
+    <a href="index.html"><button class="btn">Home</button></a>
+    <a href="druzyny.html"><button class="btn">Drużyny</button></a>
+    <a href="tabela.html"><button class="btn">Tabela</button></a>
+  </div>
+</div>
+
+<div class="container">
+
+  <h2>Result (wyniki)</h2>
+
+  <div id="loginBox">
+    <input id="pass" placeholder="Hasło admina">
+    <button class="btn main" onclick="login()">Zaloguj</button>
+  </div>
+
+  <div id="admin" style="display:none;">
+    <h3>Edycja meczu</h3>
+
+    <input id="teamA">
+    <input id="teamB">
+    <input id="date">
+    <input id="time">
+
+    <input id="scoreA" placeholder="Score A">
+    <input id="scoreB" placeholder="Score B">
+
+    <select id="status">
+      <option value="finished">Zakończony</option>
+      <option value="upcoming">Cofnij do nadchodzących</option>
+    </select>
+
+    <button class="btn main" onclick="saveMatch()">Zapisz</button>
+    <button class="btn" onclick="cancelEdit()">Anuluj</button>
+  </div>
+
+  <div id="results"></div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
+  authDomain: "topjoy-league.firebaseapp.com",
+  projectId: "topjoy-league",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let matches = [];
+let logged = false;
+let editingId = null;
+
+window.login = function() {
+  if (document.getElementById("pass").value === "2312") {
+    logged = true;
+    document.getElementById("admin").style.display = "block";
+    document.getElementById("loginBox").style.display = "none";
+    render();
+  }
+};
+
+function render() {
+  const box = document.getElementById("results");
+
+  const finished = matches.filter(m => m.status === "finished");
+
+  box.innerHTML = finished.map(m => `
+    <div class="match">
+      <b>${m.teamA} vs ${m.teamB}</b><br>
+      ${m.scoreA}:${m.scoreB} | ${m.date} ${m.time}
+      
+      ${logged ? `
+        <br><br>
+        <button class="btn edit" onclick="edit('${m.id}')">Edytuj</button>
+        <button class="btn danger" onclick="remove('${m.id}')">Usuń</button>
+      ` : ""}
     </div>
-  </header>
+  `).join("");
+}
 
-  <main class="page">
-    <section class="hero">
-      <div class="heroTag">Wyniki</div>
-      <h2>TOPJOY <span>RESULT</span></h2>
-      <p>Tutaj pojawiają się zakończone mecze z wpisanym wynikiem.</p>
-    </section>
+window.remove = async function(id) {
+  if (!logged) return;
+  await deleteDoc(doc(db, "mecze", id));
+};
 
-    <section class="resultsBox">
-      <h3 class="sectionTitle">Result</h3>
-      <div class="sectionSub">Wszystkie rozegrane mecze z wynikiem.</div>
-      <div id="resultsList" class="resultsList"></div>
-    </section>
-  </main>
+window.edit = function(id) {
+  const m = matches.find(x => x.id === id);
+  editingId = id;
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  document.getElementById("teamA").value = m.teamA;
+  document.getElementById("teamB").value = m.teamB;
+  document.getElementById("date").value = m.date;
+  document.getElementById("time").value = m.time;
+  document.getElementById("scoreA").value = m.scoreA;
+  document.getElementById("scoreB").value = m.scoreB;
+  document.getElementById("status").value = m.status;
+};
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
-      authDomain: "topjoy-league.firebaseapp.com",
-      projectId: "topjoy-league",
-      storageBucket: "topjoy-league.firebasestorage.app",
-      messagingSenderId: "148599961147",
-      appId: "1:148599961147:web:ea5f17ba9114c0dda94e1e",
-      measurementId: "G-0ETCB1NC16"
-    };
+window.saveMatch = async function() {
+  if (!editingId) return;
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  await updateDoc(doc(db, "mecze", editingId), {
+    teamA: document.getElementById("teamA").value,
+    teamB: document.getElementById("teamB").value,
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value,
+    scoreA: document.getElementById("scoreA").value,
+    scoreB: document.getElementById("scoreB").value,
+    status: document.getElementById("status").value
+  });
 
-    function render(matches) {
-      const box = document.getElementById("resultsList");
-      const finished = matches.filter(m =>
-        (m.status === "finished") ||
-        ((m.scoreA ?? "") !== "" && (m.scoreB ?? "") !== "")
-      );
+  editingId = null;
+};
 
-      if (finished.length === 0) {
-        box.innerHTML = `<div class="resultCard"><div class="teamLeft">Brak</div><div class="score">--:--</div><div class="teamRight">Brak wyników</div><div class="meta">---</div></div>`;
-        return;
-      }
+window.cancelEdit = function() {
+  editingId = null;
+};
 
-      box.innerHTML = finished.map(m => `
-        <div class="resultCard">
-          <div class="teamLeft">${m.teamA || "-"}</div>
-          <div class="score">${m.scoreA || 0}:${m.scoreB || 0}</div>
-          <div class="teamRight">${m.teamB || "-"}</div>
-          <div class="meta">${m.date || "-"}<br>${m.time || "--:--"}</div>
-        </div>
-      `).join("");
-    }
+onSnapshot(query(collection(db, "mecze"), orderBy("createdAt", "desc")), (snap) => {
+  matches = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  render();
+});
+</script>
 
-    onSnapshot(query(collection(db, "mecze"), orderBy("createdAt", "desc")), (snapshot) => {
-      const matches = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-      render(matches);
-    });
-  </script>
 </body>
 </html>
