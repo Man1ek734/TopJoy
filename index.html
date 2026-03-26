@@ -42,6 +42,13 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .logoWrap:hover {
+      transform: scale(1.03);
     }
 
     .siteLogo {
@@ -134,26 +141,12 @@
       transition: left 0.6s ease;
     }
 
-    .discordBtn:hover::before {
-      left: 130%;
-    }
+    .discordBtn:hover::before { left: 130%; }
 
     @keyframes pulseGlow {
-      0% {
-        box-shadow:
-          0 0 10px rgba(182, 107, 43, 0.18),
-          0 0 22px rgba(140, 23, 23, 0.1);
-      }
-      50% {
-        box-shadow:
-          0 0 22px rgba(182, 107, 43, 0.35),
-          0 0 42px rgba(140, 23, 23, 0.22);
-      }
-      100% {
-        box-shadow:
-          0 0 10px rgba(182, 107, 43, 0.18),
-          0 0 22px rgba(140, 23, 23, 0.1);
-      }
+      0% { box-shadow: 0 0 10px rgba(182, 107, 43, 0.18), 0 0 22px rgba(140, 23, 23, 0.1); }
+      50% { box-shadow: 0 0 22px rgba(182, 107, 43, 0.35), 0 0 42px rgba(140, 23, 23, 0.22); }
+      100% { box-shadow: 0 0 10px rgba(182, 107, 43, 0.18), 0 0 22px rgba(140, 23, 23, 0.1); }
     }
 
     .page {
@@ -165,11 +158,7 @@
       gap: 22px;
     }
 
-    .hero,
-    .matchesBox,
-    .infoBox,
-    .adminBox,
-    .panel {
+    .hero, .matchesBox, .infoBox, .adminBox, .panel {
       background: rgba(18, 24, 33, 0.92);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
@@ -260,9 +249,7 @@
       font-size: 14px;
     }
 
-    .matchesList,
-    .infoList,
-    .adminInner {
+    .matchesList, .infoList, .adminInner {
       padding: 0 16px 16px;
     }
 
@@ -369,8 +356,7 @@
       width: 100%;
     }
 
-    .logoutBtn,
-    .cancelBtn {
+    .logoutBtn, .cancelBtn {
       background: #1c2430;
       color: white;
       padding: 12px 14px;
@@ -425,13 +411,13 @@
 <body>
   <header>
     <div class="nav">
-      <div class="logoWrap">
+      <a href="index.html" class="logoWrap">
         <img src="topjoy.png" class="siteLogo" alt="TopJoy League Logo">
         <div class="logoText">
           <h1>TopJoy League</h1>
-          <span>Counter-Strike 2</span>
+          <span>COUNTER-STRIKE 2</span>
         </div>
-      </div>
+      </a>
 
       <div class="navButtons">
         <a href="druzyny.html"><button class="sectionBtn">Drużyny</button></a>
@@ -446,10 +432,7 @@
     <section class="hero">
       <div class="heroTag">Sezon 1 ligi</div>
       <h2>TOPJOY <span>LEAGUE</span></h2>
-      <p>
-        Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze,
-        edytować je po zakończeniu i przenosić je do Result.
-      </p>
+      <p>Profesjonalnie wyglądająca strona ligi CS2 z panelem admina. Możesz dodawać mecze, edytować je po zakończeniu i przenosić je do Result.</p>
 
       <div class="stats">
         <div class="stat"><small>Drużyny</small><strong id="teamsCount">0</strong></div>
@@ -490,7 +473,6 @@
 
         <div id="admin" style="display:none;">
           <div class="success">Zalogowano jako admin.</div>
-
           <input id="teamA" placeholder="Drużyna A">
           <input id="teamB" placeholder="Drużyna B">
 
@@ -529,17 +511,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      deleteDoc,
-      doc,
-      updateDoc,
-      onSnapshot,
-      query,
-      orderBy
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBTpluyfsidiEXOFkJ0H4nlN0dZdftk8e0",
@@ -567,38 +539,38 @@
 
     function renderMatches() {
       const box = document.getElementById("matches");
-      let html = "";
       const upcomingMatches = matches.filter(m => m.status !== "finished");
 
       if (upcomingMatches.length === 0) {
-        html = `
+        box.innerHTML = `
           <div class="match">
             <div class="matchDate">Brak</div>
             <div class="matchTeams">Nie dodano jeszcze żadnych nadchodzących meczów</div>
             <div class="adminControls"><div class="matchTime">--:--</div></div>
           </div>
         `;
-      } else {
-        upcomingMatches.forEach((m) => {
-          const score = (m.scoreA !== "" && m.scoreB !== "" && m.scoreA != null && m.scoreB != null)
-            ? `<div class="matchScore">${m.scoreA}:${m.scoreB}</div>`
-            : `<div class="matchTime">${m.time || "--:--"}</div>`;
-
-          html += `
-            <div class="match">
-              <div class="matchDate">${m.date || "-"}</div>
-              <div class="matchTeams">${m.teamA || "-"} <span>VS</span> ${m.teamB || "-"}</div>
-              <div class="adminControls">
-                ${score}
-                ${logged ? `<button class="editBtn" onclick="editMatch('${m.id}')">Edytuj</button>` : ``}
-                ${logged ? `<button class="deleteBtn" onclick="deleteMatch('${m.id}')">Usuń</button>` : ``}
-              </div>
-            </div>
-          `;
-        });
+        updateStats();
+        return;
       }
 
-      box.innerHTML = html;
+      box.innerHTML = upcomingMatches.map((m) => {
+        const score = (m.scoreA !== "" && m.scoreB !== "" && m.scoreA != null && m.scoreB != null)
+          ? `<div class="matchScore">${m.scoreA}:${m.scoreB}</div>`
+          : `<div class="matchTime">${m.time || "--:--"}</div>`;
+
+        return `
+          <div class="match">
+            <div class="matchDate">${m.date || "-"}</div>
+            <div class="matchTeams">${m.teamA || "-"} <span>VS</span> ${m.teamB || "-"}</div>
+            <div class="adminControls">
+              ${score}
+              ${logged ? `<button class="editBtn" onclick="editMatch('${m.id}')">Edytuj</button>` : ``}
+              ${logged ? `<button class="deleteBtn" onclick="deleteMatch('${m.id}')">Usuń</button>` : ``}
+            </div>
+          </div>
+        `;
+      }).join("");
+
       updateStats();
     }
 
@@ -639,6 +611,7 @@
     window.login = function() {
       const p = document.getElementById("pass").value;
       const msg = document.getElementById("loginMsg");
+
       if (p === password) {
         logged = true;
         document.getElementById("admin").style.display = "block";
