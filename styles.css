@@ -72,7 +72,7 @@ button,input,select{font:inherit}
   border-radius:0;box-shadow:none;cursor:pointer
 }
 .discord-login:hover{background:#5865f2;color:#fff;transform:none;filter:none}
-.discord-icon{width:20px;height:20px}
+.discord-icon{width:24px;height:24px;display:block;object-fit:cover;border-radius:5px}
 
 /* Compact page header instead of oversized hero */
 .hero{padding:16px 0 8px}
